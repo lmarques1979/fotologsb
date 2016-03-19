@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{editalbum}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+				<form th:action="@{/image/image}" th:object="${image}" method="post">
+							
+					<input th:type="hidden" th:name="id" th:field="*{id}"/>
+					<input th:type="hidden" th:name="album" th:field="*{album}"/>
+					<input th:type="hidden" th:name="name" th:field="*{name}"/>
+		
+					<fieldset class="form">
+					
+									<legend><text for="editimage" th:text="#{editimage}"></text></legend>
+									
+									<div class="fieldcontain">
+										<label for="description" th:text="#{description}"></label>
+										<span class="required-indicator">*</span>
+										<input type="text" th:name="description" th:required="true" th:autofocus="true" th:field="*{description}" /> 
+										<span class="field-validator" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+									</div>
+									
+									<div class="fieldcontain">
+											<label for="fullpermited" th:text="#{fullpermited}"></label>
+											<input type="checkbox" th:field="*{fullpermited}"  th:name="fullpermited"/>
+									</div>
+									
+									<div class="fieldcontain">
+											<label for="active" th:text="#{active}"></label>
+											<input type="checkbox" th:field="*{active}"  th:name="active"/>
+									</div>
+									
+									<div class="fieldcontain">
+										<label for="image" th:text="#{image}"></label>
+										<img th:width="120px" th:height="120px" th:src="${@environment.getProperty('cloud.aws.bucketurl')} + ${image.name}"/>
+									</div>
+									
+									<div class="fieldcontain">
+										<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+									</div>
+									
+							</fieldset>
+					
+				</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

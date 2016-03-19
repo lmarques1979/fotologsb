@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{editrule}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+		
+		
+		<form action="#" th:action="@{/rule/rule}" th:object="${rule}" method="post">
+					
+			<input th:type="hidden" th:name="id" th:field="*{id}"/>
+			
+			<fieldset class="form">
+			
+					<legend><text for="editrule" th:text="#{editrule}"></text></legend>
+					
+					<a th:href="@{/rule/delete/{id}(id= ${rule.id})}" th:class="delete"  th:title="#{delete}" th:onclick="'return confirm(\''+#{confirmdelete}+'\');'"><img th:src="@{/images/delete.png}"/></a>
+				
+					<div class="fieldcontain">
+						<label for="description" th:text="#{description}"></label>
+						<span class="required-indicator">*</span>
+						<input class="upper" th:type="text" th:name="description" th:field="*{description}" th:placeholder="#{description}" th:required="true" th:autofocus="true"  /> 
+						<span class="field-validator" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="active" th:text="#{active}"></label>
+						<input th:type="checkbox" th:field="*{active}" th:name="active" th:placeholder="#{active}"/> 
+						<span class="field-validator" th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+					
+						
+			</fieldset>	
+					
+		</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

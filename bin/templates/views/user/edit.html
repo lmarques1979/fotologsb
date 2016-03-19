@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{edituser}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+		
+		<form th:action="@{/user/user}" th:object="${user}" method="post" enctype="multipart/form-data">
+				
+		<input th:type="hidden" th:name="id" th:field="*{id}"/>
+		<input th:type="hidden" th:name="image" th:field="*{image}"/>
+		
+			<fieldset class="form">
+		
+					<legend><text for="edituser" th:text="#{edituser}"></text></legend>
+					
+					<sec sec:authorize="isAuthenticated()">
+						<a th:href="@{/user/delete/{id}(id=${user.id})}" th:class="delete"  th:title="#{delete}" th:onclick="'return confirm(\''+#{confirmdelete}+'\');'"><img th:src="@{/images/delete.png}"/></a>
+					</sec>
+					
+					<div class="fieldcontain">
+						<label for="username" th:text="#{username}"></label>
+						<span class="required-indicator">*</span>
+						<input th:class="lower" th:type="text" th:name="username" th:field="*{username}" th:maxlength="20" th:placeholder="#{username}" th:required="true" th:autofocus="true" /> 
+						<span class="field-validator" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="password" th:text="#{password}"></label>
+						<span class="required-indicator">*</span>
+						<input th:type="password" th:placeholder="#{password}" th:required="true"  th:name="password" th:field="*{password}"/>
+						<span class="field-validator" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="passwordconfirm" th:text="#{passwordconfirm}"></label>
+						<span class="required-indicator">*</span>
+						<input th:type="password" th:placeholder="#{passwordconfirm}" th:required="true"  th:name="passwordconfirm"/> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="firstname" th:text="#{firstname}"></label>
+						<span class="required-indicator">*</span>
+						<input th:type="text" th:name="firstname" th:field="*{firstname}" th:placeholder="#{firstname}" th:required="true"/> 
+						<span class="field-validator" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="surname" th:text="#{surname}"></label>
+						<span class="not-required"></span>
+						<input th:type="text" th:name="surname" th:field="*{surname}" th:placeholder="#{surname}" th:required="false"/> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="email" th:text="#{email}"></label>
+						<span class="required-indicator">*</span>
+						<input th:type="text" th:name="email" th:field="*{email}" th:size="30" th:placeholder="#{email}" th:required="true"/> 
+						<span class="field-validator" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="image" th:text="#{image}"></label>
+						<span class="required-indicator"></span>
+						<input th:type="file" th:name="file" placeholder="#{image}"/>
+					</div>
+					
+					<sec sec:authorize="isAuthenticated()">
+						<div class="fieldcontain">
+							<label for="active" th:text="#{active}"></label>
+							<input th:type="checkbox" th:field="*{active}" th:name="active" th:placeholder="#{active}"/> 
+							<span class="field-validator" th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+						</div>
+					</sec>
+					
+					<sec sec:authorize="isAnonymous()">
+						<input th:type="hidden" th:field="*{active}" th:name="active" th:placeholder="#{active}"/> 
+					</sec>
+					
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+				
+			</fieldset>	
+		
+		</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

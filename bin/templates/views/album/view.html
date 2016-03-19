@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{album}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+			<div th:text="${message}" class="message" role="status"></div>
+		</text>
+				
+		<table>
+			<thead>
+					<tr>
+						<th class="model"><text for="album" th:text="#{album}"></text></th>
+					</tr>							
+					<tr>
+						<th colspan="6">
+							<a class="adicionar margintableleft" th:title="#{add}" th:href="@{/album/album}"><img th:src="@{/images/add.png}"/></a>
+						</th>
+					</tr>							
+					<tr>
+						<th><text for="edit" th:text="#{edit}"></text></th>
+						<th><text for="description" th:text="#{description}"></text></th>
+						<th><text for="dateini" th:text="#{dateini}"></text></th>
+						<th><text for="datefin" th:text="#{datefin}"></text></th>
+						<th><text for="fullpermited" th:text="#{fullpermited}"></text></th>
+						<th><text for="active" th:text="#{active}"></text></th>
+					</tr>
+				</thead>
+				<tbody>
+				
+					<tr th:each="album : ${album}">
+						<td class="centro"><a th:title="#{edit}" th:href="@{/album/show/{id}(id= ${album.id})}"><img th:src="@{/images/edit.png}"/></a></td>
+						<td class="centro"><text for="description" th:text="${album.description}"></text></td>
+						<td class="centro"><text for="dateini" th:text="${#calendars.format(album.dateini,'dd/MM/yyyy')}"></text></td>
+						<td class="centro"><text for="datefin" th:text="${#calendars.format(album.datefin,'dd/MM/yyyy')}"></text></td>
+						<td class="centro"><text for="fullpermited" th:text="${album.fullpermited} ? #{yes} : #{no}"></text></td>
+						<td class="centro"><text for="active" th:text="${album.active} ? #{yes} : #{no}"></text></td>
+					</tr>
+					
+					<tr>
+						<td colspan="6"><a class="criar" th:href="@{/album/album}"><text for="album" th:text="#{createalbum}"></text></a></td>
+					</tr>
+											
+				</tbody>
+		</table>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

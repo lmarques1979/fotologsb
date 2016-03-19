@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{image}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		
+		    <sec sec:authorize="isAuthenticated()">
+				<div id="imageadd">
+					<a th:title="#{add}" th:href="@{/image/image}"><img th:src="@{/images/add.png}"/></a>
+				</div>
+			</sec>
+			
+			<div ng-controller="albumController">
+				<div class="albumdiv" ng-init="getAlbuns()"> 
+					<select name="singleSelect" id="album_id" ng-model="album_id" ng-change="searchImagesAlbum()">
+				      <option value=""><text th:text="#{selectalbum}"></text></option> <!-- not selected / blank option -->
+				       <option  data-ng-repeat="album in albuns" value="{{album.id}}">{{album.description}}</option>
+				    </select>
+				</div>
+			
+				<text ng-if="message">
+					<div class="message" role="status">{{message}}</div>
+				</text>
+				
+				<text ng-if="warning">
+					<div class="warning" role="status">{{warning}}</div>
+				</text>
+				
+				<script type="text/ng-template" id="ModalImageContent.html">
+        
+						<div class="modal-body">
+
+							<text ng-if="message">
+								<div class="message" role="status">
+									{{message}}
+								</div>
+							</text><div class="clearer"></div>	
+
+							<text ng-if="error">
+								<div class="errors">
+			                         {{error}}
+	                            </div>
+							</text><div class="clearer"></div>	
+							
+							<form data-ng-submit="submit()" name="form" id="form">
+							
+								<input th:type="hidden" ng-model="image.id" th:name="id" value="{{image.id}}"/>
+								<input th:type="hidden" ng-model="image.album" th:name="album" value="{{image.album}}"/>
+								<input th:type="hidden" ng-model="image.name" th:name="name" value="{{image.name}}"/>
+		
+								<fieldset class="form">
+					
+									<legend><text for="editimage" th:text="#{editimage}"></text></legend>
+									
+									<div class="fieldcontain">
+										<label for="description" th:text="#{description}"></label>
+										<input type="text" ng-model="image.description" th:name="description" th:autofocus="true" value="{{image.description}}" /> 
+									</div>
+
+									
+									<div class="fieldcontain">
+											<label for="fullpermited" th:text="#{fullpermited}"></label>
+											<input type="checkbox" ng-model="image.fullpermited"/>	
+									</div>
+									
+									<div class="fieldcontain">
+											<label for="active" th:text="#{active}"></label>
+											<input type="checkbox" ng-model="image.active"/>
+									</div>
+									
+									<div class="fieldcontain">
+										<label for="image" th:text="#{image}"></label>
+										<img th:width="120px" th:height="120px" ng-src="{{urlimage}}{{image.name}}"/>
+									</div>
+									
+									<div class="modal-footer">
+           								<button class="btn btn-primary" type="submit"><text th:text="#{submit}"></text></button>
+            							<button class="btn btn-warning" type="button" ng-click="cancel()"><text th:text="#{close}"></text></button>
+        							</div>
+									
+								</fieldset>
+					
+							</form>
+									
+									
+						</div>
+        
+    			</script>
+    			
+    			<script type="text/ng-template" id="ModalMessageContent.html">
+        
+						<div class="modal-body">
+
+							<text ng-if="message">
+								<div class="message" role="status">
+									{{message}}
+								</div>
+							</text><div class="clearer"></div>	
+
+							<text ng-if="error">
+								<div class="errors">
+			                         {{error}}
+	                            </div>
+							</text><div class="clearer"></div>	
+							
+							<form data-ng-submit="submit()" name="form" id="form">
+							
+								<input th:type="hidden" ng-model="message.image_id" th:name="image_id"/>
+								
+								<fieldset class="form">
+					
+									<legend><text for="sendmessage" th:text="#{sendmessage}"></text></legend>
+									
+									<div class="fieldcontain">
+										<label for="nome" th:text="#{name}"></label>
+										<input type="text" ng-model="message.name" th:name="name" th:autofocus="true" th:required="true"/> 
+									</div>
+
+									<div class="fieldcontain">
+										<label for="email" th:text="#{email}"></label>
+										<input type="text" th:size="40" ng-model="message.email" th:name="email" th:required="true"/> 
+									</div>
+
+									<div class="fieldcontain">
+										<label for="email" th:text="#{message}"></label>
+										<textarea id="body" ng-model="message.message" name="message" rows="8" cols="40" th:placeholder="#{message}" th:required="true"></textarea>
+									</div>
+
+									
+									<div class="modal-footer">
+           								<button class="btn btn-primary" type="submit"><text th:text="#{submit}"></text></button>
+            							<button class="btn btn-warning" type="button" ng-click="cancel()"><text th:text="#{close}"></text></button>
+        							</div>
+									
+								</fieldset>
+					
+							</form>
+									
+									
+						</div>
+        
+    			</script>
+				
+				<div ng-if="total > 0">
+				
+						<div class="albumimages" ng-if="album_id">
+									
+									<div style="height:760px">
+									    <uib-carousel id="myCarousel" active="active" interval="myInterval" no-wrap="noWrapSlides">
+									      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+									        
+											<div id="edit">
+											    <!--<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg', slide.idimage)" ><img th:src="@{/images/message.png}"/></a>-->
+											    <sec sec:authorize="isAuthenticated()">
+													<a th:title="#{edit}"   href="#" ng-if="total>0" ng-click="openModalImage('lg',slide.idimage)" ><img th:src="@{/images/edit_32x32.png}"/></a>
+													<a th:title="#{delete}" href="#" ng-if="total>0" ng-click="deleteImage(slide.idimage)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete_32x32.png}"/></a>
+												 </sec>
+											</div>
+											
+											<img ng-click="stopStartImage()" ng-src="{{slide.image}}" style="margin:auto;" ng-class="{'inactive' : slide.active==false}" />
+									       
+									        <div class="carousel-caption">
+									          <p>{{slide.text}}</p>
+									        </div>
+									       
+									      </uib-slide>
+											
+									    </uib-carousel>
+									  </div>
+									  
+									  <div class="row">
+									  	<div class="col-md-6">
+									      <text th:text="#{interval}"></text><input type="number" class="form-control" ng-model="myInterval"/>
+									      <br/><text th:text="#{negative}"></text>
+									  	</div>
+									  </div>
+									  <!-- 
+									  <div class="row">
+									    <div class="col-md-6">
+									      <button type="button" class="btn btn-info" ng-click="randomize()">Randomize slides</button>
+									      <div class="checkbox">
+									        <label>
+									          <input type="checkbox" ng-model="noWrapSlides"/>
+									          Disable Slide Looping
+									        </label>
+									      </div>
+									    </div>
+									    <div class="col-md-6">
+									      Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval"/>
+									      <br />Enter a negative number or 0 to stop the interval.
+									    </div>
+									</div>  -->
+							</div>
+					</div>
+			</div>
+	</div>
+	<div layout:fragment="scripts">
+		<script th:src="@{/js/controller/albumController.js}"></script>
+		<script th:src="@{/js/controller/imagesController.js}"></script>
+	</div>
+	
+</body>
+</html>

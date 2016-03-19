@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{createrule}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+					<div th:text="${message}" class="message" role="status"></div>
+		</text>
+	
+		<form action="#" th:action="@{/rule/rule}" th:object="${rule}" method="post">
+		
+			<fieldset class="form">
+			
+					<legend><text for="createrule" th:text="#{createrule}"></text></legend>
+					
+					<div class="fieldcontain">
+						<label for="description" th:text="#{description}"></label>
+						<span class="required-indicator">*</span>
+						<input class="upper" th:type="text" th:name="description" th:placeholder="#{description}" th:required="true" th:autofocus="true" /> 
+					</div>
+					
+					<input th:type="hidden" th:name="active" th:value="true"/>
+					
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+					
+			</fieldset>	
+			
+		</form>
+			
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

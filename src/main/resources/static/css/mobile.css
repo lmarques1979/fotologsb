@@ -1,0 +1,102 @@
+@media (max-width:700px){
+	
+	.pagination > li > a, .pagination > li > span {
+	    font-size: 0.8em;
+	    padding: 0.5em;
+	}
+	
+	ul.comida li img {
+    	width:4em;
+    	height:3em;
+    	margin-right:0;
+	}
+
+	.find{
+		height:2.3em;
+	}
+
+	.menu ul li a {
+    	font-size: 0.7em;
+	}
+	
+	.menu ul li {
+	    padding:0.6em 0.8em;
+	    
+	}
+	
+	.bx-wrapper img {
+		max-width:70px;
+		max-height:40px;
+		display: block;
+	}
+	
+	.menu ul li.img{
+	    padding:0;	
+	}
+	
+	.menu ul li img{
+	   position:relative;	
+	   width:80px;
+	   height:24px;
+	   
+	}
+
+	.topNav .icons li a img {
+	   width:15px;
+	   height:15px;
+	}
+
+	h1 , .h1{
+		font-size:2em;
+	}
+	
+	.splash {
+	    padding:0.2em;
+	}
+	
+	body{
+		font-size:0.8em;
+	}
+	
+	fieldset {
+		min-width:100%;
+	}
+	
+	fieldset.view {
+		max-width:100%;
+	}
+	
+	.adicionar img{
+		height:16px;
+		width:16px;
+	}
+
+	form{
+		min-width:100%;
+	}
+	
+	input{
+		font-size:0.8em;
+	}
+	
+	.buscarsubmit{
+		font-size: 0.95em;
+		height: 2.15em;
+		padding: 0.3em 0.8em;
+	}
+	
+	.listing li img.photo{
+		height: 9em;
+		width: 14em;
+	}
+	
+	table {
+    	min-width: 100%;
+	}
+	
+	.imagemlogo img {
+       height: 100%;
+	   width: 100%;
+	   left:0.4em;
+    }	
+}

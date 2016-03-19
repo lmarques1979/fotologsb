@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{configuration}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+			<div th:text="${message}" class="message" role="status"></div>
+		</text>
+				
+		<table>
+			<thead>
+					<tr>
+						<th class="model"><text for="configuration" th:text="#{configuration}"></text></th>
+					</tr>							
+					<tr>
+						<th colspan="6">
+							<a class="adicionar margintableleft" th:title="#{add}" th:href="@{/configuration/configuration}"><img th:src="@{/images/add.png}"/></a>
+						</th>
+					</tr>							
+					<tr>
+						<th><text for="edit" th:text="#{edit}"></text></th>
+						<th><text for="itensperpage" th:text="#{itensperpage}"></text></th>
+						<th><text for="heightthumbs" th:text="#{heightthumbs}"></text></th>
+						<th><text for="widththumbs" th:text="#{widththumbs}"></text></th>
+						<th><text for="heightimg" th:text="#{heightimg}"></text></th>
+						<th><text for="widthimg" th:text="#{widthimg}"></text></th>
+					</tr>
+				</thead>
+				<tbody>
+				
+					<tr th:each="configuration : ${configuration}">
+						<td class="centro"><a th:title="#{edit}" th:href="@{/configuration/show/{id}(id= ${configuration.id})}"><img th:src="@{/images/edit.png}"/></a></td>
+						<td class="centro"><text for="itensperpage" th:text="${configuration.itensperpage}"></text></td>
+						<td class="centro"><text for="heightthumbs" th:text="${configuration.heightthumbs}"></text></td>
+						<td class="centro"><text for="widththumbs" th:text="${configuration.widththumbs}"></text></td>
+						<td class="centro"><text for="heightimg" th:text="${configuration.heightimg}"></text></td>
+						<td class="centro"><text for="widthimg" th:text="${configuration.widthimg}"></text></td>
+					</tr>
+					
+					<tr>
+						<td colspan="6"><a class="criar" th:href="@{/configuration/configuration}"><text for="configuration" th:text="#{createconfiguration}"></text></a></td>
+					</tr>
+											
+				</tbody>
+		</table>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

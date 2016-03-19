@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{login}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	 
+	 		<div class="errors" th:if="${param.error}">
+			 	 	<span th:text="#{loginerror}"></span>
+	        </div>
+	        
+	        <form th:action="@{/user/login}" method="POST">  
+
+				<fieldset class="form">
+				
+						<legend><text for="login" th:text="#{login}"></text></legend>
+						
+						<div class="fieldcontain">
+							<label for="username" th:text="#{username}"></label>
+							<span class="required-indicator">*</span>
+							<input th:class="lower" th:type="text" th:name="username" th:maxlength="20" th:placeholder="#{username}" th:required="true" th:autofocus="true" /> 
+						</div>
+						
+						<div class="fieldcontain">
+							<label for="password" th:text="#{password}"></label>
+							<span class="required-indicator">*</span>
+							<input th:type="password" th:placeholder="#{password}" th:required="true"  th:name="password" />
+						</div>							
+						
+						<div class="fieldcontain">
+							<a th:href="@{/user/forgotpassword}" class="esqueceu"><text for="forgotpassword" th:text="#{forgotpassword}"></text></a>
+						</div>
+						
+						<div class="fieldcontain">
+							<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{enter}"></text></button>
+						</div>
+						
+				</fieldset>
+				
+			</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

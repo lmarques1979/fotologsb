@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles">
+<link th:href="@{/libs/datepicker-sandbox/css/bootstrap-datepicker3.standalone.css}" rel="stylesheet" />
+</div>
+<title th:text="#{editalbum}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<form th:action="@{/album/album}" th:object="${album}" method="post">
+					
+		<input th:type="hidden" th:name="id" th:field="*{id}"/>
+		
+			<fieldset class="form">
+			
+					<legend><text for="editcalbum" th:text="#{editalbum}"></text></legend>
+					
+					<a th:href="@{/album/delete/{id}(id= ${album.id})}" th:class="delete"  th:title="#{delete}" th:onclick="'return confirm(\''+#{confirmdelete}+'\');'"><img th:src="@{/images/delete.png}"/></a>
+				
+					<div class="fieldcontain">
+						<label for="description" th:text="#{description}"></label>
+						<input th:type="text" th:name="description" th:field="*{description}" th:autofocus="true" /> 
+						<span class="field-validator" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="dateini" th:text="#{dateini}" ></label>
+						<div id="sandbox-container">
+							 <div class="input-append date">
+							      <input type="text" class="span2" th:name="dateini" th:field="*{dateini}"/><span class="add-on"><i class="icon-th"></i></span>
+							 </div>
+						</div> 
+						<span class="field-validator" th:if="${#fields.hasErrors('dateini')}" th:errors="*{dateini}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="datefin" th:text="#{datefin}"></label>
+						<div id="sandbox-container">
+							 <div class="input-append date">
+							      <input type="text" class="span2" th:name="datefin" th:field="*{datefin}"/><span class="add-on"><i class="icon-th"></i></span>
+							 </div>
+						</div>
+						<span class="field-validator" th:if="${#fields.hasErrors('datefin')}" th:errors="*{datefin}"></span>
+					</div>
+					
+					<div class="fieldcontain">
+						<div class="fieldcontain">
+							<label for="fullpermited" th:text="#{fullpermited}"></label>
+							<input th:type="checkbox" th:field="*{fullpermited}" th:name="fullpermited" th:placeholder="#{fullpermited}"/> 
+							<span class="field-validator" th:if="${#fields.hasErrors('fullpermited')}" th:errors="*{fullpermited}"></span>
+						</div>
+					</div>
+					
+					<sec sec:authorize="isAuthenticated()">
+						<div class="fieldcontain">
+							<label for="active" th:text="#{active}"></label>
+							<input th:type="checkbox" th:field="*{active}" th:name="active" th:placeholder="#{active}"/> 
+							<span class="field-validator" th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+						</div>
+					</sec>
+					
+					<sec sec:authorize="isAnonymous()">
+						<input th:type="hidden" th:field="*{active}" th:name="active" th:placeholder="#{active}"/> 
+					</sec>
+					
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+					
+						
+			</fieldset>	
+					
+		</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts">
+		<script th:src="@{/libs/datepicker-sandbox/js/bootstrap-datepicker.js}"></script>
+		<script th:src="@{/libs/datepicker-sandbox/locales/bootstrap-datepicker.en-GB.min.js}" charset="UTF-8"></script>
+		<script th:src="@{/js/datepicker.js}"></script>
+	</div>
+	
+</body>
+</html>

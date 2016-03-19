@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{createimage}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<div ng-controller="albumController">
+		
+			
+			<div class="albumdiv" ng-init="getAlbuns()"> 
+				<select name="singleSelect" id="album_id" ng-model="album_id" ng-change="update()">
+			      <option value=""><text th:text="#{selectalbum}"></text></option> <!-- not selected / blank option -->
+			       <option  data-ng-repeat="album in albuns" value="{{album.id}}">{{album.description}}</option>
+			    </select>
+			</div>
+			
+			<div ng-if="album_id">
+			
+				<div ng-controller="imageController">
+				
+					<form name="form" id="form">
+					 
+					 		<fieldset class="form">
+					
+									<legend><text for="createalbum" th:text="#{createimage}"></text></legend>
+									
+									<div class="fieldcontain">
+										<label for="description" th:text="#{description}"></label>
+										<input type="text" ng-model="image.description" th:autofocus="true" /> 
+									</div>
+									
+									<div class="fieldcontain">
+										<label for="fullpermited" th:text="#{fullpermited}"></label>
+										<input type="checkbox" ng-checked="true" ng-model="image.fullpermited"/>
+						
+									</div>
+									
+									<div class="fieldcontain">
+										<label for="active" th:text="#{active}"></label>
+										<input type="checkbox" ng-checked="true" ng-model="image.active"/>
+									</div>
+									
+									<div class="fieldcontain">
+										<label for="selectpicture" th:text="#{selectpictures}"></label>
+										<button ngf-select="uploadFiles($files, $invalidFiles)" multiple=""
+									          accept="image/*" ngf-max-height="2000" ngf-max-size="4MB">
+											       <text th:text="#{image}"></text>
+										</button>
+									</div>
+									
+									<div class="fieldcontain centro">
+										<table class="result">
+											<thead>
+												<tr>
+													<th colspan="3"><text for="filename" th:text="#{uploadresult}"></text></th>
+												</tr>
+												<tr>
+													<th><text for="filename" th:text="#{filename}"></text></th>
+													<th><text for="status" th:text="#{status}"></text></th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+											    <tr ng-repeat="f in files" style="font:smaller">
+												    <td>{{f.name}}</td>
+												    <td class="success">{{f.result}}</td>
+												    <td></td>
+											   	</tr>
+											    <tr ng-repeat="f in errFiles" style="font:smaller">
+											    	<td>{{f.name}}</td>
+											    	<td class="erro">{{f.$error}}</td> 
+											    	<td>{{f.$errorParam}}</td>
+											    </tr> 
+										    </tbody>
+										</table>
+									</div>
+									
+							</fieldset>
+					  </form>
+			    </div>
+		    </div>
+		</div>
+	</div>
+	
+	<div layout:fragment="scripts">
+	    <script th:src="@{/js/controller/albumController.js}"></script>
+		<script th:src="@{/js/controller/imageController.js}"></script>
+	</div>
+	
+</body>
+</html>

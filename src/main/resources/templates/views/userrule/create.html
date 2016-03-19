@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{createuserrule}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+			<div th:text="${message}" class="message" role="status"></div>
+		</text>
+		
+		<text th:if="${errors}">
+			<div th:text="${errors}" class="errors"></div>
+		</text>
+		
+		<form action="#" th:action="@{/userrule/userrule}" th:object="${userrule}" method="post">
+		
+			<fieldset class="form">
+			
+					<legend><text for="createuserrule" th:text="#{createuserrule}"></text></legend>
+					
+					<div class="fieldcontain">
+						<label for="user" th:text="#{user}"></label>
+						<span class="required-indicator">*</span>
+						<select th:name="user">
+						  <option th:each="user : ${users}" 
+						          th:value="${user.id}" 
+						          th:text="${user.username + ' - ' + user.email}"></option>
+						</select>
+					</div>
+					
+					
+					<div class="fieldcontain">
+						<label for="rule" th:text="#{rule}"></label>
+						<span class="required-indicator">*</span>
+						<select th:name="rule">
+						  <option th:each="rule : ${rules}" 
+						          th:value="${rule.id}" 
+						          th:text="${rule.description}"></option>
+						</select>
+					</div>
+					
+					
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+					
+			</fieldset>	
+			
+		</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

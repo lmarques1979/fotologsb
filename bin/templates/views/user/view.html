@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{users}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+			<div th:text="${message}" class="message" role="status"></div>
+		</text>
+		
+		<table>
+			<thead>
+					<tr>
+						<th class="model"><text for="user" th:text="#{user}"></text></th>
+					</tr>
+					<tr>
+						<th colspan="6">
+							<a class="adicionar margintableleft" th:title="#{add}" th:href="@{/user/user}"><img th:src="@{/images/add.png}"/></a>
+						</th>
+					</tr>
+					<tr>
+						<th><text for="edit" th:text="#{edit}"></text></th>
+						<th><text for="username" th:text="#{username}"></text></th>
+						<th><text for="firstname" th:text="#{firstname}"></text></th>
+						<th><text for="surname" th:text="#{surname}"></text></th>
+						<th><text for="email" th:text="#{email}"></text></th>
+						<th><text for="active" th:text="#{active}"></text></th>
+						
+					</tr>
+				</thead>
+				<tbody>
+				
+					<tr th:each="user : ${pageimpl}">
+						<td class="centro"><a th:title="#{edit}" th:href="@{/user/show/{id}(id= ${user.id})}"><img th:src="@{/images/edit.png}"/></a></td>
+						<td><text for="home" th:text="${user.username}"></text></td>
+						<td class="centro"><text for="home" th:text="${user.firstname}"></text></td>
+						<td class="centro"><text for="home" th:text="${user.surname}"></text></td>
+						<td class="centro"><text for="home" th:text="${user.email}"></text></td>
+						<td class="centro"><text for="home" th:text="${user.active}? #{yes} : #{no}"></text></td>
+					</tr>
+					
+					<tr>
+						<td colspan="6"><a class="criar" th:href="@{/user}"><text for="createuser" th:text="#{createuser}"></text></a></td>
+					</tr>
+											
+				</tbody>
+		</table>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{createconfiguration}"></title>
+</head>
+<body>
+	
+	<div layout:fragment="content">
+	
+		<text th:if="${message}">
+			<div th:text="${message}" class="message" role="status"></div>
+		</text>
+			
+		<form action="#" th:action="@{/configuration/configuration}" th:object="${configuration}" method="post">
+		
+			<fieldset class="form">
+			
+					<legend><text for="createconfiguration" th:text="#{createconfiguration}"></text></legend>
+					
+					<div class="fieldcontain">
+						<label for="itensperpage" th:text="#{itensperpage}"></label>
+						<input th:type="text" th:value="10" th:name="itensperpage" th:size="5" th:autofocus="true" /> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="heightthumbs" th:text="#{heightthumbs}"></label>
+						<input th:type="text" th:value="20" th:name="heightthumbs"/> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="widththumbs" th:text="#{widththumbs}"></label>
+						<input th:type="text" th:value="20" th:name="widththumbs"/> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="heightimg" th:text="#{heightimg}"></label>
+						<input th:type="text" th:value="50" th:name="heightimg"/> 
+					</div>
+					
+					<div class="fieldcontain">
+						<label for="widthimg" th:text="#{widthimg}"></label>
+						<input th:type="text" th:value="50" th:name="widthimg" />
+					</div>
+					<div class="fieldcontain">
+						<button class="btn btn-lg btn-primary btn-block submit" th:type="submit"><text for="enviar" th:text="#{save}"></text></button>
+					</div>
+					
+			</fieldset>	
+			
+		</form>
+	
+	</div>	
+	
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

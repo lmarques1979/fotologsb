@@ -1,0 +1,146 @@
+<nav th:fragment="navbarcontent"> 
+
+	<div class="navbar">
+	
+			<div class="menu">
+	       
+			       	<ul>
+						
+						<div class="right">
+								<sec sec:authorize="isAuthenticated()">
+		       							<li class="usuario" >
+		       								<a th:href="@{/user/show/{id}(id=${#authentication.principal.user.id})}">
+											[<text sec:authentication="principal.name"></text>]
+											</a>
+										</li>
+				       			</sec>
+										<li class="int"><a th:href="@{/?lang=pt_BR}" th:title="#{portuguese}"><img th:src="@{/images/pt_BR.png}"/></a></li>
+										<li class="int"><a th:href="@{/?lang=en}" th:title="#{ingles}"><img th:src="@{/images/en.png}"/></a></li>
+										<li class="int"><a th:href="@{/?lang=es}" th:title="#{espanhol}"><img th:src="@{/images/es.png}"/></a></li>
+						</div>
+							
+						<sec sec:authorize="isAuthenticated()">
+							
+							<li th:class="${#httpServletRequest.getServletPath().equals('/configuration/view') ||
+				 							#httpServletRequest.getServletPath().equals('/configuration/configuration') ||
+				 							#httpServletRequest.getServletPath().contains('/configuration/show') ? 'active' : ''}">
+				 					<a th:href="@{/configuration/view}"><text for="configuration" th:text="#{configuration}"></text></a>
+				 			</li>
+				 			
+				 			<li th:class="${#httpServletRequest.getServletPath().equals('/album/view') ||
+				 							#httpServletRequest.getServletPath().equals('/album/album') ||
+				 							#httpServletRequest.getServletPath().contains('/album/show') ? 'active' : ''}">
+				 					<a th:href="@{/album/view}"><text for="album" th:text="#{album}"></text></a>
+				 			</li>
+				 			
+				 			<li th:class="${#httpServletRequest.getServletPath().equals('/image/view') ||
+				 							#httpServletRequest.getServletPath().equals('/image/album') ||
+				 							#httpServletRequest.getServletPath().contains('/image/show') ? 'active' : ''}">
+				 					<a th:href="@{/image/view}"><text for="album" th:text="#{image}"></text></a>
+				 			</li>
+				 			
+				 			<sec sec:authorize="hasAuthority('ADMIN')">
+				   		 	
+				   		 		<li th:class="${#httpServletRequest.getServletPath().contains('/rule/view') ? 'active' : ''}">
+				   		 			<a th:href="@{/rule/view}"><text for="rule" th:text="#{rule}"></text></a>
+				   		 		</li>
+				   		 		<li th:class="${#httpServletRequest.getServletPath().contains('/userrule/view') ? 'active' : ''}">
+				   		 			<a th:href="@{/userrule/view}"><text for="userrule" th:text="#{userrule}"></text></a>
+				   		 		</li>	
+				   		 		<li th:class="${#httpServletRequest.getServletPath().contains('/user/view') ? 'active' : ''}">
+				   		 			<a th:href="@{/user/view}"><text for="user" th:text="#{user}"></text></a>
+				   		 		</li>			   		 	
+				   		 	</sec>
+				   		 	
+				   		 	
+				   		 	
+				 		</sec>
+					 	
+					 	<sec th:if="${#authentication}==null or ${#authentication.principal} == 'anonymousUser'">
+					 	
+					 		<li th:class="${#httpServletRequest.getServletPath().contains('/user/show') ||
+					 		                #httpServletRequest.getServletPath().equals('/user/user') ? 'active' : ''}">
+					 			<a th:href="@{/user/user}"><text for="criarusuario" th:text="#{createuser}"></text></a>
+					 		</li>
+					 		
+					 		<li th:class="${#httpServletRequest.getServletPath().contains('/image/viewpublic') ? 'active' : ''}">
+					 			<a th:href="@{/image/viewpublic}"><text for="image" th:text="#{image}"></text></a>
+					 		</li>
+					 		
+					 		<li th:class="${#httpServletRequest.getServletPath().equals('/user/login') ? 'active' : ''}">
+					 			<a th:href="@{/user/login}"><text for="login" th:text="#{login}"></text></a>
+					 		</li>
+					 	</sec>
+					  
+						<li class="email" ng-controller="ModalEmailController">
+						 <script type="text/ng-template" id="ModalEmailContent.html">
+        
+								<div class="modal-body">
+
+									 <text ng-if="message">
+											<div class="message" role="status">
+												{{message}}
+											</div>
+									 </text><div class="clearer"></div>	
+
+									 <text ng-if="error">
+											<div class="errors">
+			                                   {{error}}
+	                                        </div>
+									 </text><div class="clearer"></div>	
+									
+									
+									<form data-ng-submit="submit()" name="form" id="form">  
+
+										<fieldset class="form">
+				
+												<legend><text for="login" th:text="#{contact}"></text></legend>
+						
+												<div class="fieldcontain">
+													<label for="name" th:text="#{name}"></label>
+													<span class="required-indicator">*</span>
+													<input th:type="text" ng-model="contact.name" th:name="name" th:maxlength="35" th:size="35" th:placeholder="#{name}" th:required="true" th:autofocus="true" /> 
+												</div>
+
+												<div class="fieldcontain">
+													<label for="email" th:text="#{email}"></label>
+													<span class="required-indicator">*</span>
+													<input th:class="lower" ng-model="contact.email" th:type="text" th:name="email" th:size="35" th:maxlength="40" th:placeholder="#{email}" th:required="true" /> 
+												</div>
+						
+												<div class="fieldcontain">
+													<label for="message" th:text="#{message}"></label>
+													<span class="required-indicator">*</span>
+													<textarea id="body" ng-model="contact.message" name="message" rows="8" cols="40" th:placeholder="#{message}" th:required="true"></textarea>
+												</div>
+
+												<div class="modal-footer">
+           											<button class="btn btn-primary" type="submit"><text th:text="#{submit}"></text></button>
+            										<button class="btn btn-warning" type="button" ng-click="cancel()"><text th:text="#{close}"></text></button>
+        										</div>
+
+										</fieldset>
+										
+                                    
+									</form>
+								</div>
+        
+    						</script>
+
+							<a class="email" ng-click="open('lg')" href="#" th:title="#{sendemail}"><text th:text="#{contact}"></text></a>
+					</li>	
+		
+					<sec sec:authorize="isAuthenticated()">
+						<li class="logout"><a th:href="@{/user/logout}"><text for="logout" th:text="#{logout}"></text></a></li>
+					</sec>
+			</ul>
+			
+			</div><div class="clearer"></div>	
+			
+			<div class="background"></div>
+			
+			<div class="clearer"></div>
+			
+	</div>
+	
+</nav>
