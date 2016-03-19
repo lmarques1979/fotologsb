@@ -10,6 +10,10 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	$scope.image = {};
 	$scope.animationsEnabled = true;
 	
+	$("#myCarousel").on('slide.bs.carousel', function () {
+        alert('A new slide is about to be shown!');
+	});
+	
 	$scope.openModalMessage = function (size,imageId) {
 		
 		var modalInstance = $uibModal.open({

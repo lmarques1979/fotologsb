@@ -23,6 +23,14 @@ button text, legend text, .criar text {
     color: #000;
 }
 
+.totalimages{
+	text-align:center;
+	font-size:1.3em;
+	display: block;
+	font-family:cursive;
+	font-weight:bold;
+}
+
 text{
 	color:#fff;
 }
@@ -42,7 +50,6 @@ text{
 }
 
 .total{
-	
 	font-size:1em;
     padding:0;
     text-align:center;
@@ -83,7 +90,8 @@ img.inactive:hover {
 } 
 
 .img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-    height:710px;
+    height:680px;
+    width: auto;
 }
 
 table td.success {
