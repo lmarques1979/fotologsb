@@ -6,15 +6,15 @@ app.factory('messageService', function($http, $q){
 			sendMessage:sendMessage
 	};
 	
-	function sendMessage(imageId) {
+	function sendMessage(message,imageId) {
 			
-			var url = rootUrl + '/message/send/' + imageId;
+			var url = rootUrl + '/message/message';
 			
 			return $http({
 	      		method:'POST',
 	            url:url ,
 	            params: {jsonimg:message,
-	            	     imageidid:imageId}
+	            	     imageid:imageId}
 	      		})
 	              .then(
 	                      function(response){

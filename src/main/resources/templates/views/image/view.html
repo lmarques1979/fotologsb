@@ -100,9 +100,9 @@
         
 						<div class="modal-body">
 
-							<text ng-if="message">
+							<text ng-if="comment">
 								<div class="message" role="status">
-									{{message}}
+									{{comment}}
 								</div>
 							</text><div class="clearer"></div>	
 
@@ -122,12 +122,12 @@
 									
 									<div class="fieldcontain">
 										<label for="nome" th:text="#{name}"></label>
-										<input type="text" ng-model="message.name" th:name="name" th:autofocus="true" th:required="true"/> 
+										<input type="text" ng-model="message.fromuser" th:name="fromuser" th:autofocus="true" th:required="true"/> 
 									</div>
 
 									<div class="fieldcontain">
 										<label for="email" th:text="#{email}"></label>
-										<input type="text" th:size="40" ng-model="message.email" th:name="email" th:required="true"/> 
+										<input type="text" th:size="40" ng-model="message.fromemail" th:name="fromemail" th:required="true"/> 
 									</div>
 
 									<div class="fieldcontain">
@@ -160,7 +160,8 @@
 									        
 									        <div id="edit">
 											    <!--<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg', slide.idimage)" ><img th:src="@{/images/message.png}"/></a>-->
-											    <sec sec:authorize="isAuthenticated()">
+											    <a th:title="#{sendmessage}"   href="#" ng-if="total>0" ng-click="openModalMessage('lg',slide.idimage)" ><img th:src="@{/images/message.png}"/></a>
+												<sec sec:authorize="isAuthenticated()">
 													<a th:title="#{edit}"   href="#" ng-if="total>0" ng-click="openModalImage('lg',slide.idimage)" ><img th:src="@{/images/edit_32x32.png}"/></a>
 													<a th:title="#{delete}" href="#" ng-if="total>0" ng-click="deleteImage(slide.idimage)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete_32x32.png}"/></a>
 												 </sec>
@@ -181,13 +182,13 @@
 									    </uib-carousel>
 									  </div>
 									  
-									  <div class="row">
+									  <!--<div class="row">
 									  	<div class="col-md-6">
 									      <text th:text="#{interval}"></text><input type="number" class="form-control" ng-model="myInterval"/>
 									      <br/><text th:text="#{negative}"></text>
 									  	</div>
 									  </div>
-									  <!-- 
+									   
 									  <div class="row">
 									    <div class="col-md-6">
 									      <button type="button" class="btn btn-info" ng-click="randomize()">Randomize slides</button>

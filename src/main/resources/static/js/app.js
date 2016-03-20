@@ -1,6 +1,6 @@
 'use strict';
 
-var rootUrl = ''
+var rootUrl = '/fotolog'
 
 var app=angular.module('fotolog', ['ngAnimate',
                                    'ngRoute', 

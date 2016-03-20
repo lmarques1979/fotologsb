@@ -1,6 +1,6 @@
 app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $timeout, albumService, imageService) {
 
-	$scope.myInterval=4000;
+	$scope.myInterval=0;
 	$scope.noWrapSlides=false;
 	$scope.active=0;
 	var slides = $scope.slides = [];
@@ -33,6 +33,7 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	      $log.info('Modal dismissed at: ' + new Date());
 	    });
 	};
+	
 	$scope.openModalImage = function (size, imageId) {
 
 	    $scope.code = null;
@@ -216,13 +217,25 @@ app.controller('ModalImageCtrl', function ($scope, $uibModalInstance, $uibModal 
 	};
 });
 
-app.controller('ModalMessageCtrl', function ($scope, $uibModalInstance, $uibModal , $http , param) {
+app.controller('ModalMessageCtrl', function ($scope, $uibModalInstance, $uibModal , $http , messageService, param) {
 	
 	var imageid = param.imageid;
 	
 	$scope.submit = function () {
 	 
 		var message=angular.toJson($scope.message);
+		
+		messageService.sendMessage(message,imageid)
+	      .then(
+		           function(response) {
+		        	  $scope.comment=response.data.message;
+		        	  //Reset Form
+		        	  $scope.message = {};
+		 		   },
+		            function(errResponse){
+		        	   $scope.error = errResponse.statusText;
+		        	}
+	           )
   	};
 
 	$scope.cancel = function () {

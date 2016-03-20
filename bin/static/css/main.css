@@ -11,6 +11,10 @@ html {
     color:#fff;
 }
 
+textarea {
+    color: #000;
+}
+
 .btn.btn-lg.btn-primary.btn-block.submit:active {
     background-color:#fff;
 }

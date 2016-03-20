@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+
 @Entity
 @Table(name="tb_message")
 public class Message {
@@ -22,78 +24,78 @@ public class Message {
 	@Column(name = "message", nullable = false)
 	private String message;
 	
-	@Column(name = "remetente", nullable = false)
-	private String remetente;
+	@Column(name = "fromuser", nullable = false)
+	private String fromuser;
 	
-	@Column(name = "emailremetente", nullable = false)
-	private String emailremetente;
+	@Column(name = "fromemail", nullable = false)
+	private String fromemail;
 	
-	@Column(name = "datemessage", nullable = false)
+	@Column(name = "datemessage", nullable = true)
 	private Date datemessage;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="image_id")
+	@JsonIgnore
 	private Image image;
 	
+	@Column(name = "active", nullable = false)
+	private boolean active=false;
+	
 	protected Message() {}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getMessage() {
 		return message;
 	}
 
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
-
-	public Image getImage() {
-		return image;
+	public String getFromuser() {
+		return fromuser;
 	}
 
-
-	public void setImage(Image image) {
-		this.image = image;
+	public void setFromuser(String fromuser) {
+		this.fromuser = fromuser;
 	}
 
+	public String getFromemail() {
+		return fromemail;
+	}
+
+	public void setFromemail(String fromemail) {
+		this.fromemail = fromemail;
+	}
 
 	public Date getDatemessage() {
 		return datemessage;
 	}
 
-
 	public void setDatemessage(Date datemessage) {
 		this.datemessage = datemessage;
 	}
 
-
-	public String getRemetente() {
-		return remetente;
+	public Image getImage() {
+		return image;
 	}
 
-
-	public void setRemetente(String remetente) {
-		this.remetente = remetente;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
-
-	public String getEmailremetente() {
-		return emailremetente;
+	public boolean isActive() {
+		return active;
 	}
 
-
-	public void setEmailremetente(String emailremetente) {
-		this.emailremetente = emailremetente;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }
