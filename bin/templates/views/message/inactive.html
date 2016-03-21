@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="layouts/main">
+<head>
+<div layout:fragment="styles"></div>
+<title th:text="#{messages}"></title>
+</head>
+<body>
+	<div layout:fragment="content" ng-controller="messageController" ng-init="searchInactive()">
+	
+		<text th:if="${comment}">
+			<div th:text="${comment}" class="message" role="status"></div>
+		</text>
+				
+		<table ng-controller="messageController">
+			<thead>
+					<tr>
+						<th class="model"><text for="messages" th:text="#{messages}"></text></th>
+					</tr>
+					
+					<tr>
+						<th><text for="fromuser" th:text="#{fromuser}"></text></th>
+						<th><text for="fromemail" th:text="#{fromemail}"></text></th>
+						<th><text for="datemessage" th:text="#{datemessage}"></text></th>
+						<th><text for="message" th:text="#{message}"></text></th>
+						<th><text for="active" th:text="#{active}"></text></th>
+					</tr>
+					
+				</thead>
+				<tbody>
+				
+					<tr ng-repeat="message in message track by message.id" index="message.id">
+					    <input type="hidden" ng-model="message.id"/>
+					    <td class="centro"><input ng-readonly="true" ng-model="message.fromuser"  type="text"/></td>
+						<td class="centro"><input ng-readonly="true" ng-model="message.fromemail" type="text"/></td>
+						<td class="centro"><input ng-readonly="true" ng-model="message.datemessage" date='dd/MM/yyyy' type="text"/></td>
+						<td>
+							<textarea ng-readonly="true" ng-model="message.message" rows="4" cols="40"></textarea>
+						</td>
+						<td class="centro"><input ng-model="message.active" type="checkbox"/></td>
+					</tr>
+					
+					<tr>
+						<td colspan="5"><a class="criar" href="#" ng-click="saveActive()"><text for="save" th:text="#{save}"></text></a></td>
+					</tr>
+											
+				</tbody>
+		</table>
+	
+	</div>
+	<div layout:fragment="scripts"></div>
+	
+</body>
+</html>

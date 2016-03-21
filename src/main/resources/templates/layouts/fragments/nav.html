@@ -27,6 +27,10 @@
 				 					<a th:href="@{/configuration/view}"><text for="configuration" th:text="#{configuration}"></text></a>
 				 			</li>
 				 			
+				 			<li th:class="${#httpServletRequest.getServletPath().equals('/message/inactive') ? 'active' : ''}">
+					 				<a th:href="@{/message/inactive}"><text for="inactive" th:text="#{inactive}"></text></a>
+					 		</li>
+				 			
 				 			<li th:class="${#httpServletRequest.getServletPath().equals('/album/view') ||
 				 							#httpServletRequest.getServletPath().equals('/album/album') ||
 				 							#httpServletRequest.getServletPath().contains('/album/show') ? 'active' : ''}">

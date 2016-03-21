@@ -17,6 +17,7 @@ import br.com.marquesapps.model.Image
 import br.com.marquesapps.model.Message
 import br.com.marquesapps.repository.ImageRepository
 import br.com.marquesapps.repository.MessageRepository
+import br.com.marquesapps.util.Util
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -32,7 +33,50 @@ class MessageController {
 	private ImageRepository imageRepository
 	
 	@Autowired
-	private MessageSource messageSource			   
+	private MessageSource messageSource			
+	
+	@Autowired
+	private Util util;
+	
+	@RequestMapping(value="/saveactive" , method = RequestMethod.POST)
+	@Transactional
+	def ResponseEntity<String> saveactive(@RequestParam("jsonmsg") def jsonmsg) {
+		
+		try {
+				ObjectMapper mapper = new ObjectMapper();
+				def jsonInString = jsonmsg;
+				//JSON from String to Object
+				Message message = mapper.readValue(jsonInString, Message.class);
+				messageRepository.save(message)
+				return new ResponseEntity<>([message:messageSource.getMessage("success", null, LocaleContextHolder.getLocale())], HttpStatus.OK);
+		
+		} catch (Exception e) {
+				
+				return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
+		
+		}
+	}
+									
+	@RequestMapping(value="/inactive",method=RequestMethod.GET)
+	def inactive() {
+		return "views/message/inactive"
+	}
+	
+	@RequestMapping(value="/searchinactive",method=RequestMethod.POST)
+	def ResponseEntity<Message> searchinactive() {
+		
+		try {
+			def user=util.getLoggedUser()
+			def message=messageRepository.findByUser(user)
+			return new ResponseEntity<>([messages:message], HttpStatus.OK);
+		
+		} catch (Exception e) {
+				
+			return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
+		
+		}
+	}
+	
 	
 	@RequestMapping(value="/show/{id}",method=RequestMethod.GET)
 	def ResponseEntity<Image> show(@PathVariable(value="id") Long id) {

@@ -53,9 +53,9 @@
 							
 							<form data-ng-submit="submit()" name="form" id="form">
 							
-								<input th:type="hidden" ng-model="image.id" th:name="id" value="{{image.id}}"/>
-								<input th:type="hidden" ng-model="image.album" th:name="album" value="{{image.album}}"/>
-								<input th:type="hidden" ng-model="image.name" th:name="name" value="{{image.name}}"/>
+								<input th:type="hidden" ng-model="image.id" th:name="id"/>
+								<input th:type="hidden" ng-model="image.album" th:name="album"/>
+								<input th:type="hidden" ng-model="image.name" th:name="name"/>
 		
 								<fieldset class="form">
 					
@@ -63,7 +63,7 @@
 									
 									<div class="fieldcontain">
 										<label for="description" th:text="#{description}"></label>
-										<input type="text" ng-model="image.description" th:name="description" th:autofocus="true" value="{{image.description}}" /> 
+										<input type="text" ng-model="image.description" th:name="description" th:autofocus="true"/> 
 									</div>
 
 									

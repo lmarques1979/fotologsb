@@ -775,9 +775,9 @@ input[type="checkbox"], input[type="radio"]{
 
 input{
     display:inline-block;
-   	height: 2.7em;
+   	height:2.35em;
    	width:auto;
-    padding: 0.2em 1.2em;
+    padding:0.5em;
     font-size:1.1em;
     line-height:1.42857;
     color:#555;
