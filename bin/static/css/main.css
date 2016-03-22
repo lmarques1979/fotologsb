@@ -45,7 +45,7 @@ text{
     color:#fff;
 }
 
-.carousel img{
+a img{
     cursor:pointer;
 }
 
@@ -225,7 +225,7 @@ table td.erro {
 .input-append .add-on, .input-prepend .add-on {
     display: inline-block;
     width: 3em;
-	height: 2.76em;
+	height: 2.4em;
     min-width: 16px;
     padding: 4px 5px;
     font-size: 14px;

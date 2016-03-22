@@ -122,17 +122,17 @@
 									
 									<div class="fieldcontain">
 										<label for="nome" th:text="#{name}"></label>
-										<input type="text" ng-model="message.fromuser" th:name="fromuser" th:autofocus="true" th:required="true"/> 
+										<input type="text" ng-model="message.fromuser" name="fromuser" ng-required="true"/> 
 									</div>
 
 									<div class="fieldcontain">
 										<label for="email" th:text="#{email}"></label>
-										<input type="text" th:size="40" ng-model="message.fromemail" th:name="fromemail" th:required="true"/> 
+										<input type="text" ng-size="40" ng-model="message.fromemail" name="fromemail" ng-required="true"/> 
 									</div>
 
 									<div class="fieldcontain">
 										<label for="email" th:text="#{message}"></label>
-										<textarea id="body" ng-model="message.message" name="message" rows="8" cols="40" th:placeholder="#{message}" th:required="true"></textarea>
+										<textarea id="body" ng-model="message.message" name="message" rows="8" cols="40" ng-required="true"></textarea>
 									</div>
 
 									
@@ -144,26 +144,24 @@
 								</fieldset>
 					
 							</form>
-									
-									
+
 						</div>
         
     			</script>
 				
 				<div ng-if="total > 0">
 				
-						<div class="albumimages" ng-if="album_id">
+					<div class="albumimages" ng-if="album_id">
 									
-									<div style="height:760px">
+									<div>
 									    <uib-carousel id="myCarousel" active="active" interval="myInterval" no-wrap="noWrapSlides">
 									      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
 									        
 									        <div id="edit">
-											    <!--<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg', slide.idimage)" ><img th:src="@{/images/message.png}"/></a>-->
-											    <a th:title="#{sendmessage}"   href="#" ng-if="total>0" ng-click="openModalMessage('lg',slide.idimage)" ><img th:src="@{/images/message.png}"/></a>
+									        	<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg',slide.idimage)" ><img th:src="@{/images/message.png}"/></a>
 												<sec sec:authorize="isAuthenticated()">
-													<a th:title="#{edit}"   href="#" ng-if="total>0" ng-click="openModalImage('lg',slide.idimage)" ><img th:src="@{/images/edit_32x32.png}"/></a>
-													<a th:title="#{delete}" href="#" ng-if="total>0" ng-click="deleteImage(slide.idimage)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete_32x32.png}"/></a>
+													<a th:title="#{edit}"   href="#" ng-click="openModalImage('lg',slide.idimage, $index)" ><img th:src="@{/images/edit_32x32.png}"/></a>
+													<a th:title="#{delete}" href="#" ng-click="deleteImage(slide.idimage, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
 												 </sec>
 											</div>
 											
@@ -205,12 +203,12 @@
 									    </div>
 									</div>  -->
 							</div>
-					</div>
+							
+						</div>
 			</div>
 	</div>
 	<div layout:fragment="scripts">
 		<script th:src="@{/js/controller/albumController.js}"></script>
-		<script th:src="@{/js/controller/imagesController.js}"></script>
 	</div>
 	
 </body>

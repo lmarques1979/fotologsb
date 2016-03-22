@@ -51,7 +51,6 @@ public class Image implements Serializable{
 	@OneToMany(mappedBy="image",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JsonIgnore
 	private Set<Message> messages;
-	
 
 	protected Image() {}
 

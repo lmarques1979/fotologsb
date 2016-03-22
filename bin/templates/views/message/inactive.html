@@ -9,13 +9,13 @@
 <title th:text="#{messages}"></title>
 </head>
 <body>
-	<div layout:fragment="content" ng-controller="messageController" ng-init="searchInactive()">
+	<div layout:fragment="content" ng-controller="messageController" >
 	
-		<text th:if="${comment}">
-			<div th:text="${comment}" class="message" role="status"></div>
-		</text>
+		<div ng-if="comment" class="message" role="status">
+			{{comment}}
+		</div><div class="clearer"></div><br/>							
 				
-		<table ng-controller="messageController">
+		<table ng-init="searchInactive()">
 			<thead>
 					<tr>
 						<th class="model"><text for="messages" th:text="#{messages}"></text></th>
@@ -27,13 +27,15 @@
 						<th><text for="datemessage" th:text="#{datemessage}"></text></th>
 						<th><text for="message" th:text="#{message}"></text></th>
 						<th><text for="active" th:text="#{active}"></text></th>
+						<th></th>
 					</tr>
 					
 				</thead>
 				<tbody>
 				
-					<tr ng-repeat="message in message track by message.id" index="message.id">
+					<tr ng-repeat="message in message track by message.id">
 					    <input type="hidden" ng-model="message.id"/>
+					    <input type="hidden" ng-model="message.image"/>
 					    <td class="centro"><input ng-readonly="true" ng-model="message.fromuser"  type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.fromemail" type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.datemessage" date='dd/MM/yyyy' type="text"/></td>
@@ -41,10 +43,13 @@
 							<textarea ng-readonly="true" ng-model="message.message" rows="4" cols="40"></textarea>
 						</td>
 						<td class="centro"><input ng-model="message.active" type="checkbox"/></td>
+						<td>
+							<a th:title="#{delete}" ng-click="deleteMessage(message.id, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
+						</td>
 					</tr>
 					
 					<tr>
-						<td colspan="5"><a class="criar" href="#" ng-click="saveActive()"><text for="save" th:text="#{save}"></text></a></td>
+						<td colspan="6"><a class="criar" href="#" ng-click="saveActive()"><text for="save" th:text="#{save}"></text></a></td>
 					</tr>
 											
 				</tbody>

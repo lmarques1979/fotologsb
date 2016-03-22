@@ -1,5 +1,20 @@
 app.controller('messageController', function ($scope, $http, $timeout, messageService) {
-
+	
+	$scope.deleteMessage = function (messageId, index) {
+	  	
+		messageService.deleteMessage(messageId) 
+	      .then(
+		           function(response) {
+		        	   $scope.message.splice(index,1);
+		        	   $scope.comment=response.data.message;
+                       $timeout(function () { $scope.comment=""; }, 2500);
+		           },
+		            function(errResponse){
+		        	   $scope.error = errResponse.statusText;
+		        	}
+	           )
+	}
+	
 	$scope.searchInactive = function() {
 		  
 		messageService.searchInactive()
@@ -17,18 +32,24 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 	
 	$scope.saveActive = function() {
 		  
-			var message=angular.toJson($scope.message);
-		
-		    messageService.saveActive(message)
-		      .then(
-			           function(response) {
-			        	   $scope.comment=response.data.message;
-			        	},
-			            function(errResponse){
-			        	   $scope.error = errResponse.statusText;
-			        	}
-		           )
-			 
-	       
+			var messages=$scope.message;
+		    
+			angular.forEach(messages, function(message,key) {
+				
+				messageService.saveActive(message)
+			      .then(
+				           function(response) {
+				        	   $scope.comment=response.data.message;
+				        	   $timeout(function () { $scope.comment=""; }, 2500);
+				        	   if ($scope.message[key].active==true){
+				        		   $scope.message.splice(key,1);
+				        	   }
+				        	},
+				            function(errResponse){
+				        	   $scope.error = errResponse.statusText;
+				        	}
+			           )
+			});
+			
 	}
 });

@@ -1,4 +1,4 @@
-app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $timeout, albumService, imageService) {
+app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $timeout, albumService, imageService, messageService) {
 
 	$scope.myInterval=0;
 	$scope.noWrapSlides=false;
@@ -10,36 +10,27 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	$scope.image = {};
 	$scope.animationsEnabled = true;
 	
-	$("#myCarousel").on('slide.bs.carousel', function () {
-        alert('A new slide is about to be shown!');
-	});
-	
-	$scope.openModalMessage = function (size,imageId) {
-		
-		var modalInstance = $uibModal.open({
+	$scope.openModalMessage = function (size, imageId) {
+
+	    var modalInstance = $uibModal.open({
 	      animation: $scope.animationsEnabled,
 	      templateUrl: 'ModalMessageContent.html',
 	      controller: 'ModalMessageCtrl',
-	      size:size,
+	      size: size,
 	      resolve: {
               param: function () {
-                  $log.log(imageId)
                   return {'imageid':imageId};
               }
           }
 	    });
 
-	    modalInstance.result.then(function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
 	};
 	
-	$scope.openModalImage = function (size, imageId) {
+	$scope.openModalImage = function (size, imageId, index) {
 
 	    $scope.code = null;
 	    $scope.response = null; 
-	    var index = $('#myCarousel .active').index();
-	    
+	   
 	    imageService.editImage(imageId)
 	   .then(
 		           function(response) {
@@ -56,25 +47,40 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	      templateUrl: 'ModalImageContent.html',
 	      controller: 'ModalImageCtrl',
 	      size: size,
-	      scope: $scope
+	      scope: $scope,
+	      resolve: {
+              param: function () {
+                  return {'index':index};
+              }
+          }
 	    });
 
-	    modalInstance.result.then(function () {
-	      $log.info('Modal dismissed at: ' + new Date());
-	    });
+	   
 	};
 	  
 	$scope.addSlide = function(image) {
 	    var newWidth = 600 + slides.length + 1;
 	    var urlimage='https://fotologlmdcm.s3.amazonaws.com/';
 	    var photo=urlimage+image.name;
+	    var messages={};
+	    
+	    /*messageService.messagesImage(image.id)
+		   .then(
+			           function(response) {
+			        	   messages = response.data.message;
+			        	},
+			            function(errResponse){
+			        	   $scope.error = errResponse.statusText;
+			        	}
+		);*/
 	    
 	    slides.push({
 	      image: photo,
 	      text: image.description,
 	      id: currIndex++,
 	      idimage:image.id,
-	      active:image.active
+	      active:image.active,
+	      messages:messages
 	    });
 	    $scope.total=currIndex;
 	};
@@ -168,10 +174,8 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	           )
 	  }
 
-	  $scope.deleteImage = function (imageId) {
+	  $scope.deleteImage = function (imageId, index) {
 		  	
-			var index = $('#myCarousel .active').index();
-			
 			imageService.deleteImage(imageId)
 		      .then(
 			           function(response) {
@@ -189,12 +193,12 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 
 //Please note that $uibModalInstance represents a modal window (instance) dependency.
 //It is not the same as the $uibModal service used above.
-app.controller('ModalImageCtrl', function ($scope, $uibModalInstance, $uibModal , $http , imageService, blockUI) {
+app.controller('ModalImageCtrl', function ($scope, $uibModalInstance, $uibModal , $http , imageService, param) {
 	
-    $scope.submit = function () {
+	$scope.submit = function () {
 	  
-    	var index = $('#myCarousel .active').index();
-		var image=angular.toJson($scope.image);
+		var index=param.index;
+    	var image=angular.toJson($scope.image);
 		var albumid=$scope.album_id;
 		
 		imageService.updateImage(image,albumid)
@@ -216,6 +220,7 @@ app.controller('ModalImageCtrl', function ($scope, $uibModalInstance, $uibModal 
 	    $uibModalInstance.dismiss('cancel');
 	};
 });
+
 
 app.controller('ModalMessageCtrl', function ($scope, $uibModalInstance, $uibModal , $http , messageService, param) {
 	

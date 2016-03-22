@@ -38,6 +38,22 @@ class MessageController {
 	@Autowired
 	private Util util;
 	
+	@PreAuthorize('permitAll')
+	@RequestMapping(value="/messagesimage/{id}",method=RequestMethod.GET)
+	def ResponseEntity<Image> messagesimage(@PathVariable(value="id") Long id) {
+		
+		try {
+				def image=imageRepository.findOne(id)
+				def message=messageRepository.findByImageAndActiveTrue(image)
+				return new ResponseEntity<>([message:message], HttpStatus.OK);
+		
+		} catch (Exception e) {
+				
+			return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
+		
+		}
+	}
+	
 	@RequestMapping(value="/saveactive" , method = RequestMethod.POST)
 	@Transactional
 	def ResponseEntity<String> saveactive(@RequestParam("jsonmsg") def jsonmsg) {
