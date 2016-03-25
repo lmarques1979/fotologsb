@@ -26,8 +26,7 @@ var app=angular.module('fotolog', ['ngAnimate',
 	$rootScope.rootUrl = rootUrl;
 });
 
-app.directive('ngConfirmClick', [
-         function(){
+app.directive('ngConfirmClick', function(){
              return {
                  priority: 1,
                  terminal: true,
@@ -41,4 +40,4 @@ app.directive('ngConfirmClick', [
                      });
                  }
              };
-}])
+});

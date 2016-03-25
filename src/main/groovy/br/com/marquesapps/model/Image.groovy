@@ -12,10 +12,15 @@ import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 import javax.persistence.OneToOne
 import javax.persistence.Table
+import javax.persistence.OrderBy
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Where
 
 import br.com.marquesapps.security.model.User
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 
 @Entity
 @Table(name="tb_image")
@@ -49,7 +54,9 @@ public class Image implements Serializable{
 	private User user;
 	
 	@OneToMany(mappedBy="image",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JsonIgnore
+	//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+	@Where(clause="active=1")
+	@OrderBy("datemessage DESC")
 	private Set<Message> messages;
 
 	protected Image() {}
@@ -123,6 +130,7 @@ public class Image implements Serializable{
 
 
 	public Set<Message> getMessages() {
+		
 		return messages;
 	}
 

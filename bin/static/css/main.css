@@ -11,6 +11,30 @@ html {
     color:#fff;
 }
 
+a img.deletemsg {
+	margin:0;
+}
+
+.messages {
+    border: 1px solid #fff;
+    width: 40%;
+    display: block;
+    margin: 1em auto;
+    -webkit-border-radius:1em;
+    -moz-border-radius:1em;
+    border-radius: 1em;
+}
+
+.messages p{
+	color: #fff;
+	text-align: left;
+	margin: 0.2em 1em;
+}
+
+.messages p.msg{
+	margin:0 2em;
+}
+
 textarea {
     color: #000;
 }
@@ -118,7 +142,7 @@ table td.erro {
 
 #edit {
     display: block;
-    margin: 0 auto 1.3em;
+    margin:1em auto;
     text-align: center;
 }
 
@@ -914,6 +938,7 @@ label {
 	line-height: 2;
 	margin:0 1em 1em;
 	padding: 0.25em;
+	text-align: left;
 }
 
 .message {

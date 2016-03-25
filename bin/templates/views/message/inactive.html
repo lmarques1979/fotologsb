@@ -35,7 +35,7 @@
 				
 					<tr ng-repeat="message in message track by message.id">
 					    <input type="hidden" ng-model="message.id"/>
-					    <input type="hidden" ng-model="message.image"/>
+					    <input type="hidden" ng-model="message.image_id"/>
 					    <td class="centro"><input ng-readonly="true" ng-model="message.fromuser"  type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.fromemail" type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.datemessage" date='dd/MM/yyyy' type="text"/></td>
@@ -44,7 +44,7 @@
 						</td>
 						<td class="centro"><input ng-model="message.active" type="checkbox"/></td>
 						<td>
-							<a th:title="#{delete}" ng-click="deleteMessage(message.id, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
+							<a href="#" th:title="#{delete}" ng-click="deleteMessage(message.id, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
 						</td>
 					</tr>
 					

@@ -1,5 +1,6 @@
 app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $timeout, albumService, imageService, messageService) {
 
+	vm=this;
 	$scope.myInterval=0;
 	$scope.noWrapSlides=false;
 	$scope.active=0;
@@ -9,6 +10,22 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	//reset Form
 	$scope.image = {};
 	$scope.animationsEnabled = true;
+		
+	$scope.deleteMessageCarousel = function (messageId, parentindex, index) {
+	  	
+		messageService.deleteMessage(messageId) 
+	      .then(
+		           function(response) {
+		        	   $scope.slides[parentindex].messages.splice(index,1);
+		        	   $scope.commentuser=response.data.message;
+                       $timeout(function () { $scope.commentuser=""; }, 2500);
+		           },
+		            function(errResponse){
+		        	   $scope.error = errResponse.statusText;
+		        	}
+	           )
+	}
+	
 	
 	$scope.openModalMessage = function (size, imageId) {
 
@@ -57,14 +74,15 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 
 	   
 	};
-	  
+	
 	$scope.addSlide = function(image) {
 	    var newWidth = 600 + slides.length + 1;
 	    var urlimage='https://fotologlmdcm.s3.amazonaws.com/';
 	    var photo=urlimage+image.name;
-	    var messages={};
 	    
-	    /*messageService.messagesImage(image.id)
+	    /*var messages;
+	    
+	    messageService.messagesImage(image.id)
 		   .then(
 			           function(response) {
 			        	   messages = response.data.message;
@@ -80,18 +98,17 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	      id: currIndex++,
 	      idimage:image.id,
 	      active:image.active,
-	      messages:messages
+	      messages:image.messages
 	    });
 	    $scope.total=currIndex;
 	};
-	
-	
+	 
 	$scope.randomize = function() {
 	    var indexes = generateIndexesArray();
 	    assignNewIndexesToSlides(indexes);
 	};
 	
-	// Randomize logic below
+	//Randomize logic below
 	function assignNewIndexesToSlides(indexes) {
 	    for (var i = 0, l = slides.length; i < l; i++) {
 	      slides[i].id = indexes.pop();

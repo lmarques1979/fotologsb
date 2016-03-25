@@ -14,6 +14,8 @@ import javax.persistence.TemporalType
 
 import org.springframework.format.annotation.DateTimeFormat
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo
+import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
 @Entity
@@ -35,18 +37,20 @@ public class Message {
 	private String fromemail;
 	
 	@Column(name = "datemessage", nullable = true)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datemessage;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="image_id")
+	//@JsonIgnore
 	@JsonSerialize(as=Image.class)
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 	private Image image;
 	
 	@Column(name = "active", nullable = false)
 	private boolean active=false;
-	
+	 
 	protected Message() {}
 
 	public Long getId() {
