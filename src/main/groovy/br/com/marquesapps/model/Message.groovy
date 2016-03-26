@@ -14,9 +14,7 @@ import javax.persistence.TemporalType
 
 import org.springframework.format.annotation.DateTimeFormat
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.ObjectIdGenerators
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 @Entity
 @Table(name="tb_message")
@@ -43,10 +41,8 @@ public class Message {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="image_id")
-	//@JsonIgnore
-	@JsonSerialize(as=Image.class)
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-	private Image image;
+	@JsonIgnore
+	public Image image;
 	
 	@Column(name = "active", nullable = false)
 	private boolean active=false;

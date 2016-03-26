@@ -54,10 +54,11 @@ class MessageController {
 		}
 	}
 	
-	@RequestMapping(value="/saveactive" , method = RequestMethod.POST)
+	@RequestMapping(value="/savecomments" , method = RequestMethod.POST)
 	@Transactional
-	def ResponseEntity<String> saveactive(@RequestParam("jsonmsg") def jsonmsg) {
+	def ResponseEntity<String> savecomments(@RequestParam("jsonmsg") def jsonmsg) {
 		
+		def a=1
 		try {
 				ObjectMapper mapper = new ObjectMapper();
 				def jsonInString = jsonmsg;
@@ -71,28 +72,7 @@ class MessageController {
 				return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
 		
 		}
-	}
-									
-	@RequestMapping(value="/inactive",method=RequestMethod.GET)
-	def inactive() {
-		return "views/message/inactive"
-	}
-	
-	@RequestMapping(value="/searchinactive",method=RequestMethod.POST)
-	def ResponseEntity<Message> searchinactive() {
-		
-		try {
-			def user=util.getLoggedUser()
-			def message=messageRepository.findByUser(user)
-			return new ResponseEntity<>([messages:message], HttpStatus.OK);
-		
-		} catch (Exception e) {
-				
-			return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
-		
-		}
-	}
-	
+	}					
 	
 	@RequestMapping(value="/show/{id}",method=RequestMethod.GET)
 	def ResponseEntity<Image> show(@PathVariable(value="id") Long id) {

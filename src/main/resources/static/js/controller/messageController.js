@@ -1,4 +1,6 @@
-app.controller('messageController', function ($scope, $http, $timeout, messageService) {
+app.controller('messageController', function ($scope, $http, $timeout, messageService, imageService) {
+	
+	var images = $scope.images = [];
 	
 	$scope.deleteMessage = function (messageId, index) {
 	  	
@@ -15,12 +17,12 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 	           )
 	}
 	
-	$scope.searchInactive = function() {
+	$scope.searchComments = function() {
 		  
-		messageService.searchInactive()
+		imageService.searchComments() 
 	      .then(
 		           function(response) {
-		        	   $scope.message=response.data.messages;
+		        	   $scope.images=response.data.images;
 		        	},
 		            function(errResponse){
 		        	   $scope.error = errResponse.statusText;
@@ -30,20 +32,20 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
        
 	}
 	
-	$scope.saveActive = function() {
+	$scope.saveComments = function() {
 		  
-			var messages=$scope.message;
+			var messages=$scope.messages;
 		    
 			angular.forEach(messages, function(message,key) {
 				
-				messageService.saveActive(message)
+				messageService.saveComments(message)
 			      .then(
 				           function(response) {
 				        	   $scope.comment=response.data.message;
 				        	   $timeout(function () { $scope.comment=""; }, 2500);
-				        	   if ($scope.message[key].active==true){
+				        	   /*if ($scope.message[key].active==true){
 				        		   $scope.message.splice(key,1);
-				        	   }
+				        	   }*/
 				        	},
 				            function(errResponse){
 				        	   $scope.error = errResponse.statusText;

@@ -155,11 +155,12 @@
 									
 									<div>
 									    <uib-carousel id="myCarousel" active="active" interval="myInterval" no-wrap="noWrapSlides">
-									      <uib-slide ng-repeat="slide in slides">
+									      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
 									        
 									        <div id="edit">
-									        	<sec sec:authorize="isAuthenticated()">
-													<a th:title="#{edit}"   href="#" ng-click="openModalImage('lg',slide.idimage, $index)" ><img th:src="@{/images/edit_32x32.png}"/></a>
+									        	<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg',slide.idimage)" ><img th:src="@{/images/message.png}"/></a>
+												<sec sec:authorize="isAuthenticated()">
+									        		<a th:title="#{edit}"   href="#" ng-click="openModalImage('lg',slide.idimage, $index)" ><img th:src="@{/images/edit_32x32.png}"/></a>
 													<a th:title="#{delete}" href="#" ng-click="deleteImage(slide.idimage, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
 												 </sec>
 											</div>
@@ -174,25 +175,21 @@
 									          <p>{{slide.text}}</p>
 									        </div>
 									        
-									        <div id="edit">
-									        	<a th:title="#{sendmessage}" href="#" ng-click="openModalMessage('lg',slide.idimage)" ><img th:src="@{/images/message.png}"/></a>
-											</div> 
-											
-											<div ng-if="commentuser" class="message" role="status">
+									        <div ng-if="commentuser" class="message" role="status">
 												{{commentuser}}
 											</div><div class="clearer"></div><br/>
-										    <div class="messages" ng-repeat="msguser in slide.messages">
-										   				
-										   				<p>{{msguser.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{msguser.datemessage}}
-											            	<sec sec:authorize="isAuthenticated()">
-												            	<a href="#" th:title="#{delete}" ng-click="deleteMessageCarousel(msguser.id, $parent.$index, $index)" ng-confirm-click="Confirm Delete?">
-												            		<img class="deletemsg" th:src="@{/images/delete_16.png}"/>
-												            	</a>
-											            	</sec>
-														</p>
-										          	<p class="msg">{{msguser.message}}</p>
-											</div>
-									        
+											
+										    <ul>
+								    			<li class="messages" ng-repeat="messages in slide.messages | filter:{active:true} as results" index="messages.id">
+								    				<p>
+										    			{{messages.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{messages.datemessage | date:'dd/MM/yyyy hh:mm'}}
+												    </p>
+											        <p class="msg">
+											        	{{messages.message}}
+											        </p>
+								    			</li>
+										    </ul>
+									         
 									      </uib-slide>
 											
 									    </uib-carousel>

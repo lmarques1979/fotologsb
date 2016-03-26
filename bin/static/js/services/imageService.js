@@ -6,8 +6,29 @@ app.factory('imageService', function($http, $q){
 			searchImagesAlbum:searchImagesAlbum,
 			editImage:editImage,
 			deleteImage:deleteImage,
-			updateImage:updateImage
+			updateImage:updateImage,
+			searchComments:searchComments  
 	};
+	
+	
+	function searchComments() {  
+		
+		var url = rootUrl + '/image/searchcomments';
+		
+		return $http({
+      		method:'POST',
+            url:url
+      		})
+              .then(
+                      function(response){
+                         return response;
+                      }, 
+                      function(errResponse){
+                          console.error(errResponse);
+                          return $q.reject(errResponse);
+                      }
+        );
+	}
 	
 	function searchImagesAlbum(album_id) {
 		

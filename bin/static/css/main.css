@@ -146,6 +146,11 @@ table td.erro {
     text-align: center;
 }
 
+#edit a img {
+    padding: 0 1em;
+}
+
+
 .cropArea {
     position: relative;
     margin-top: 3.5em;

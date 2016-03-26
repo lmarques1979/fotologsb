@@ -13,7 +13,7 @@ public interface MessageRepository extends PagingAndSortingRepository<Message, L
 	//Find all messages from selected image
 	List<Message> findByImageAndActiveTrue(Image image); 
 	
-	@Query(value="SELECT m FROM Message m, Image i, Album a WHERE m.image.id=i.id and i.album.id=a.id and m.active=0 and a.user=:user")
-	List<Message> findByUser(@Param("user") User user);
+	//@Query(value="SELECT m FROM Message m, Image i, Album a WHERE m.image=i and i.album=a and a.user=:user")
+	//List<Message> findByUser(@Param("user") User user);
 	
 }

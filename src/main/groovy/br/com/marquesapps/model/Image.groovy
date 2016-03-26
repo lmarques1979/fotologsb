@@ -10,19 +10,17 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
-import javax.persistence.OneToOne
-import javax.persistence.Table
 import javax.persistence.OrderBy
+import javax.persistence.Table
 
-import org.hibernate.annotations.Where
-
-import br.com.marquesapps.security.model.User
-
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name="tb_image")
 public class Image implements Serializable{
 
@@ -48,19 +46,11 @@ public class Image implements Serializable{
 	@JsonIgnore
 	private Album album;
 	
-	@OneToOne
-	@JoinColumn(name="user_id")
-	@JsonIgnore
-	private User user;
-	
 	@OneToMany(mappedBy="image",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-	@Where(clause="active=1")
 	@OrderBy("datemessage DESC")
 	private Set<Message> messages;
 
 	protected Image() {}
-
 
 	public Long getId() {
 		return id;
@@ -118,16 +108,6 @@ public class Image implements Serializable{
 	public void setAlbum(Album album) {
 		this.album = album;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 
 	public Set<Message> getMessages() {
 		

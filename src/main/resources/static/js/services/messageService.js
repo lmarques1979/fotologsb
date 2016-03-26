@@ -4,8 +4,7 @@ app.factory('messageService', function($http, $q){
  
 	var svc = {
 			messagesImage:messagesImage,
-			searchInactive:searchInactive,
-			saveActive:saveActive,
+			saveComments:saveComments,
 			sendMessage:sendMessage,
 			deleteMessage:deleteMessage
 	};
@@ -28,29 +27,11 @@ app.factory('messageService', function($http, $q){
                       }
         );
 	}
-	
-	function searchInactive() {
-		
-		var url = rootUrl + '/message/searchinactive';
-		
-		return $http({
-      		method:'POST',
-            url:url
-      		})
-              .then(
-                      function(response){
-                         return response;
-                      }, 
-                      function(errResponse){
-                          console.error(errResponse);
-                          return $q.reject(errResponse);
-                      }
-        );
-	}
 
-	function saveActive(message) {
+
+	function saveComments(message) {
 		
-		var url = rootUrl + '/message/saveactive';
+		var url = rootUrl + '/message/savecomments';
 		var messagejson=angular.toJson(message);
 		
 		return $http({

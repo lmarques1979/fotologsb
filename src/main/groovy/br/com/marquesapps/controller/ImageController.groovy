@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
 
 import br.com.marquesapps.model.Image
+import br.com.marquesapps.model.Message;
 import br.com.marquesapps.repository.AlbumRepository
 import br.com.marquesapps.repository.ImageRepository
 import br.com.marquesapps.util.Amazon
@@ -51,6 +52,27 @@ class ImageController {
 	
 	@Autowired
 	private MessageSource messageSource
+	
+	
+	@RequestMapping(value="/searchcomments",method=RequestMethod.POST)
+	def ResponseEntity<Message> searchcomments() {
+		
+		try {
+			def user=util.getLoggedUser()
+			def images=imageRepository.findByAlbum(user)
+			return new ResponseEntity<>([images:images], HttpStatus.OK);
+		
+		} catch (Exception e) {
+				
+			return new ResponseEntity<>([message:messageSource.getMessage("error", null, LocaleContextHolder.getLocale())], HttpStatus.NO_CONTENT );
+		
+		}
+	}
+	
+	@RequestMapping(value="/comments",method=RequestMethod.GET)
+	def comments() {
+		return "views/message/comments"
+	}
 	
 	@RequestMapping(value="/upload" , method = RequestMethod.POST)
 	def ResponseEntity<String> upload(@RequestParam("file") MultipartFile f,
@@ -87,9 +109,8 @@ class ImageController {
 			 @RequestParam(value='idalbum',required=false) Long idalbum) {
 		
 		if (idalbum!=null && !idalbum.isEmpty() ){
-			def user = util.getLoggedUser()
 			def album=albumRepository.findOne(idalbum)
-			def image=imageRepository.findByUserAndAlbumAndActiveTrue(user,album)
+			def image=imageRepository.findByAlbumAndActiveTrue(album)
 			model.addAttribute("image", image);
 		}
 		new ModelAndView("views/image/view")
@@ -114,18 +135,7 @@ class ImageController {
 		
 		try{
 			def album=albumRepository.findOne(id)
-			def user=util.getLoggedUser()
-			def images
-			if(user==null){
-			    images=imageRepository.findByAlbumAndActiveTrue(album)
-			}else{
-				images=imageRepository.findByUserAndAlbum(user,album)
-			}
-			
-			if (images.size()==0){
-				
-			} 
-			
+			def images=imageRepository.findByAlbumAndActiveTrue(album)
 			return new ResponseEntity<>([images:images,
 										 message:messageSource.getMessage("noregister", null, LocaleContextHolder.getLocale())
 										], HttpStatus.OK);
