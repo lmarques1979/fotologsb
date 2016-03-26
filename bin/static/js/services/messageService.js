@@ -37,7 +37,7 @@ app.factory('messageService', function($http, $q){
 		return $http({
       		method:'POST',
             url:url,
-            params: {jsonmsg:message}
+            params: {jsonmsg:messagejson}
       		})
               .then(
                       function(response){

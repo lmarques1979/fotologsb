@@ -1,6 +1,6 @@
 app.controller('messageController', function ($scope, $http, $timeout, messageService, imageService) {
 	
-	var images = $scope.images = [];
+	var message = $scope.message = [];
 	
 	$scope.deleteMessage = function (messageId, index) {
 	  	
@@ -22,7 +22,27 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 		imageService.searchComments() 
 	      .then(
 		           function(response) {
-		        	   $scope.images=response.data.images;
+		        	   
+		        	   var total  = response.data.images.length;
+		        	   var images = response.data.images;
+		        	   
+		        	   for (var i = 0, l = total; i < l; i++) {
+               			   var image=images[i];
+               			   var totalmsg=images[i].messages.length;
+               			  
+			        		   for (var k = 0, m = totalmsg; k < m; k++) {
+			        			   message.push({
+			        				   	  id: images[i].messages[k].id,
+			        				 message: images[i].messages[k].message,
+			        				fromuser: images[i].messages[k].fromuser,
+			        			   fromemail: images[i].messages[k].fromemail,
+			        			 datemessage: images[i].messages[k].datemessage,
+			        			 	  active: images[i].messages[k].active,
+			        				   image: image
+			        				    });
+			        		   }
+		        	   }
+		        	   $scope.message=message;
 		        	},
 		            function(errResponse){
 		        	   $scope.error = errResponse.statusText;
@@ -34,7 +54,7 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 	
 	$scope.saveComments = function() {
 		  
-			var messages=$scope.messages;
+			var messages=$scope.message;
 		    
 			angular.forEach(messages, function(message,key) {
 				
@@ -43,9 +63,7 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 				           function(response) {
 				        	   $scope.comment=response.data.message;
 				        	   $timeout(function () { $scope.comment=""; }, 2500);
-				        	   /*if ($scope.message[key].active==true){
-				        		   $scope.message.splice(key,1);
-				        	   }*/
+				        	   
 				        	},
 				            function(errResponse){
 				        	   $scope.error = errResponse.statusText;

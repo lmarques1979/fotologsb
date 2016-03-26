@@ -41,7 +41,7 @@ public class Message {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="image_id")
-	@JsonIgnore
+	//@JsonIgnore
 	public Image image;
 	
 	@Column(name = "active", nullable = false)
