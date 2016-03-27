@@ -29,6 +29,7 @@ public interface ImageRepository extends PagingAndSortingRepository<Image, Long>
 	//@Query(value="SELECT i FROM Message m, Image i, Album a WHERE m.image=i and i.album=a and i.album=:album order by m.datemessage DESC")
 	//List<Image> findByAlbumAndActiveTrue(@Param("album") Album album)
 	
+	
 	@Query(value="SELECT distinct i FROM Message m, Image i, Album a WHERE m.image=i and i.album=a and a.user=:user")
 	List<Image> findByAlbum(@Param("user") User user);
 	

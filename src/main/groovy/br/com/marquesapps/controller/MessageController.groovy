@@ -1,6 +1,7 @@
 package br.com.marquesapps.controller;
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
@@ -25,6 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Controller
 @PreAuthorize('isAuthenticated()')
 class MessageController {
+	
+	@Value('${cloud.aws.bucketurl}')
+	private String urlamazonS3;
 	
 	@Autowired
 	private MessageRepository messageRepository

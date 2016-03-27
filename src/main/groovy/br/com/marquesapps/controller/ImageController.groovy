@@ -53,7 +53,7 @@ class ImageController {
 	@Autowired
 	private MessageSource messageSource
 	
-	
+	@PreAuthorize('permitAll')
 	@RequestMapping(value="/searchcomments",method=RequestMethod.POST)
 	def ResponseEntity<Message> searchcomments() {
 		

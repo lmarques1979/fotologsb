@@ -9,6 +9,8 @@ app.factory('messageService', function($http, $q){
 			deleteMessage:deleteMessage
 	};
 	
+	
+
 	function messagesImage(imageId) {
 		
 		var url = rootUrl + '/message/messagesimage/' + imageId;

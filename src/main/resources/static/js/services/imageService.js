@@ -6,10 +6,9 @@ app.factory('imageService', function($http, $q){
 			searchImagesAlbum:searchImagesAlbum,
 			editImage:editImage,
 			deleteImage:deleteImage,
-			updateImage:updateImage,
-			searchComments:searchComments  
+			updateImage:updateImage ,
+			searchComments:searchComments
 	};
-	
 	
 	function searchComments() {  
 		

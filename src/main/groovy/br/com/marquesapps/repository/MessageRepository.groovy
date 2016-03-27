@@ -1,5 +1,7 @@
 package br.com.marquesapps.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.repository.query.Param
@@ -12,8 +14,5 @@ public interface MessageRepository extends PagingAndSortingRepository<Message, L
 	
 	//Find all messages from selected image
 	List<Message> findByImageAndActiveTrue(Image image); 
-	
-	//@Query(value="SELECT m FROM Message m, Image i, Album a WHERE m.image=i and i.album=a and a.user=:user")
-	//List<Message> findByUser(@Param("user") User user);
 	
 }
