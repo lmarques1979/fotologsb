@@ -60,7 +60,7 @@ class ImageController {
 		try {
 			def user=util.getLoggedUser()
 			def images=imageRepository.findByAlbum(user)
-			return new ResponseEntity<>([images:images], HttpStatus.OK);
+			return new ResponseEntity<>([images:images, urlimage:urlamazonS3], HttpStatus.OK);
 		
 		} catch (Exception e) {
 				

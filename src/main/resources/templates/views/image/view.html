@@ -182,7 +182,7 @@
 										    <ul>
 								    			<li class="messages" ng-repeat="messages in slide.messages | filter:{active:true} as results" index="messages.id">
 								    				<p>
-										    			{{messages.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{messages.datemessage | date:'dd/MM/yyyy hh:mm'}}
+										    			{{messages.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{messages.datemessage | date:'dd/MM/yyyy hh:mm:ss'}}
 												    </p>
 											        <p class="msg">
 											        	{{messages.message}}

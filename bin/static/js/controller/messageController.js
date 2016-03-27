@@ -1,7 +1,7 @@
-app.controller('messageController', function ($scope, $http, $timeout, messageService, imageService) {
+app.controller('messageController', function ($scope, $http, $filter, $timeout, messageService, imageService) {
 	
 	var message = $scope.message = [];
-	
+
 	$scope.deleteMessage = function (messageId, index) {
 	  	
 		messageService.deleteMessage(messageId) 
@@ -23,9 +23,9 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 	      .then(
 		           function(response) {
 		        	   
-		        	   var total  = response.data.images.length;
-		        	   var images = response.data.images;
-		        	   
+		        	   var total  	= response.data.images.length;
+		        	   var images 	= response.data.images;
+		        	   var urlimage = response.data.urlimage;
 		        	   for (var i = 0, l = total; i < l; i++) {
                			   var image=images[i];
                			   var totalmsg=images[i].messages.length;
@@ -43,6 +43,7 @@ app.controller('messageController', function ($scope, $http, $timeout, messageSe
 			        		   }
 		        	   }
 		        	   $scope.message=message;
+		        	   $scope.urlimage=urlimage;
 		        	},
 		            function(errResponse){
 		        	   $scope.error = errResponse.statusText;

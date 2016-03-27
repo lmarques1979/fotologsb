@@ -57,13 +57,11 @@ class MessageController {
 	@RequestMapping(value="/savecomments" , method = RequestMethod.POST)
 	@Transactional
 	def ResponseEntity<String> savecomments(@RequestParam("jsonmsg") def jsonmsg) {
-		
-		def a=1
+
 		try {
 				ObjectMapper mapper = new ObjectMapper();
-				def jsonInString = jsonmsg;
 				//JSON from String to Object
-				Message message = mapper.readValue(jsonInString, Message.class);
+				Message message = mapper.readValue(jsonmsg, Message.class);
 				messageRepository.save(message)
 				return new ResponseEntity<>([message:messageSource.getMessage("success", null, LocaleContextHolder.getLocale())], HttpStatus.OK);
 		

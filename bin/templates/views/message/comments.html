@@ -22,6 +22,7 @@
 					</tr>
 					
 					<tr>
+						<th></th>
 						<th><text for="fromuser" th:text="#{fromuser}"></text></th>
 						<th><text for="fromemail" th:text="#{fromemail}"></text></th>
 						<th><text for="datemessage" th:text="#{datemessage}"></text></th>
@@ -36,6 +37,7 @@
 					<tr ng-repeat="message in message track by message.id">
 					    <input type="hidden" ng-model="message.id"/>
 					    <input type="hidden" ng-model="message.image"/>
+					    <td><img th:width="100px" th:height="100px" ng-src="{{urlimage}}{{message.image.name}}"/></td>
 					    <td class="centro"><input ng-readonly="true" ng-model="message.fromuser"  type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.fromemail" type="text"/></td>
 						<td class="centro"><input ng-readonly="true" ng-model="message.datemessage" type="text"/></td>
@@ -48,7 +50,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6"><a class="criar" href="#" ng-click="saveComments()"><text for="save" th:text="#{save}"></text></a></td>
+						<td colspan="7"><a class="criar" href="#" ng-click="saveComments()"><text for="save" th:text="#{save}"></text></a></td>
 					</tr>
 											
 				</tbody>
