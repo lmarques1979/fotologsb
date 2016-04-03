@@ -5,6 +5,11 @@
 	    padding: 0.5em;
 	}
 	
+	a img {
+	    height: 2em;
+    	width: 2em;
+	}
+	
 	ul.comida li img {
     	width:4em;
     	height:3em;
@@ -34,11 +39,43 @@
 	    padding:0;	
 	}
 	
+	.menu li a.email {
+	   background-size: 2em;
+	}
+	
+	.menu li.email {
+    	padding:0.6em;
+	}
+	
+	.menu li.usuario {
+	    font-size: 1em;
+	    padding: 0;
+	}
+	
+	.background {
+	    height: 5em;
+	}
+	
+	#imageadd img{
+    	height: 2em;
+    	width: 2em;
+	}
+
+	#edit a img {
+		height:2em;
+    	width:4em;
+	}
+	
 	.menu ul li img{
 	   position:relative;	
-	   width:80px;
-	   height:24px;
+	   width:2.2em;
+	   height:2em;
 	   
+	}
+	
+	.messages {
+    	width:100%;
+    	margin: 1em -2.5em;
 	}
 
 	.topNav .icons li a img {
@@ -59,16 +96,20 @@
 	}
 	
 	fieldset {
-		min-width:100%;
+		max-width:100%;      
 	}
 	
+	button.submit {
+    	padding:0.8em;
+    }
+
 	fieldset.view {
 		max-width:100%;
 	}
 	
 	.adicionar img{
-		height:16px;
-		width:16px;
+		height:2em;
+		width:2em;
 	}
 
 	form{

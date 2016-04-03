@@ -122,7 +122,8 @@ img.inactive:hover {
 } 
 
 .img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-    min-width:auto;
+    width:auto;
+  	max-height:680px;
   	height:auto;
 }
 
@@ -190,6 +191,7 @@ table td.erro {
 	text-shadow: 1px 1px 5px #000;
 	font-size:1.6em;
 	font-family:cursive;
+	margin-bottom:6em;
 }
 
 

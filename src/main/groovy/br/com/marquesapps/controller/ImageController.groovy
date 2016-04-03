@@ -1,7 +1,5 @@
 package br.com.marquesapps.controller;
 
-import javax.validation.Valid
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
@@ -12,8 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
-import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -22,10 +18,11 @@ import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
 
 import br.com.marquesapps.model.Image
-import br.com.marquesapps.model.Message;
+import br.com.marquesapps.model.Message
 import br.com.marquesapps.repository.AlbumRepository
 import br.com.marquesapps.repository.ImageRepository
 import br.com.marquesapps.util.Amazon
+import br.com.marquesapps.util.Configurations
 import br.com.marquesapps.util.Util
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -43,6 +40,9 @@ class ImageController {
 	
 	@Autowired
 	private ImageRepository imageRepository
+	
+	@Autowired
+	private Configurations configurations
 	
 	@Autowired
 	private Amazon amazon;
@@ -134,7 +134,14 @@ class ImageController {
 		
 		try{
 			def album=albumRepository.findOne(id)
-			def images=imageRepository.findByAlbumAndActiveTrue(album)
+			def user=util.getLoggedUser()
+			def images
+			if (user==null){
+				images=imageRepository.findByAlbumAndActiveTrueAndFullpermitedTrue(album)
+			}else{
+			 	images=imageRepository.findByAlbum(album)
+			}
+				
 			return new ResponseEntity<>([images:images,
 										 message:messageSource.getMessage("noregister", null, LocaleContextHolder.getLocale())
 										], HttpStatus.OK);
@@ -201,7 +208,6 @@ class ImageController {
 				def jsonInString = jsonimg;
 				//JSON from String to Object
 				Image image = mapper.readValue(jsonInString, Image.class);
-				image.setUser(util.getLoggedUser())
 				image.setAlbum(album)
 				imageRepository.save(image)
 				return new ResponseEntity<>([message:messageSource.getMessage("success", null, LocaleContextHolder.getLocale())], HttpStatus.OK);

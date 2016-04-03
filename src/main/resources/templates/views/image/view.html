@@ -157,7 +157,7 @@
 				
 					<div class="albumimages" ng-if="album_id">
 									
-									<div style="height:680px">
+									<div>
 									    <uib-carousel id="myCarousel" active="active" interval="myInterval" no-wrap="noWrapSlides">
 									      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
 									        
@@ -186,7 +186,7 @@
 										    <ul>
 								    			<li class="messages" ng-repeat="messages in slide.messages | filter:{active:true} as results" index="messages.id">
 								    				<p>
-										    			{{messages.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{messages.datemessage | date:'dd/MM/yyyy hh:mm:ss'}}
+										    			{{messages.fromuser}} <text th:text="#{sentmessage}"></text> <text th:text="#{at}"></text> {{messages.datemessage | date:'dd/MM/yyyy HH:mm:ss'}}
 												    </p>
 											        <p class="msg">
 											        	{{messages.message}}

@@ -35,7 +35,7 @@ public class Message {
 	private String fromemail;
 	
 	@Column(name = "datemessage", nullable = true)
-	@DateTimeFormat(pattern="dd/MM/yyyy hh:mm:ss")
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datemessage;
 	
