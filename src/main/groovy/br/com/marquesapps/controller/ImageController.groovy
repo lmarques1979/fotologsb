@@ -92,7 +92,6 @@ class ImageController {
 				image.setName(midia)
 			}
 			
-			image.setUser(util.getLoggedUser())
 			image.setAlbum(album)
 			imageRepository.save(image)
 			return new ResponseEntity<>([message:messageSource.getMessage("success", null, LocaleContextHolder.getLocale())], HttpStatus.OK);

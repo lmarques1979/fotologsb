@@ -11,6 +11,10 @@ html {
     color:#fff;
 }
 
+ul.slideoption  li{
+ 	display: inline;
+}
+
 a img.deletemsg {
 	margin:0;
 }
@@ -118,8 +122,8 @@ img.inactive:hover {
 } 
 
 .img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-    height:680px;
-    width: auto;
+    min-width:auto;
+  	height:auto;
 }
 
 table td.success {
@@ -140,8 +144,20 @@ table td.erro {
     text-align: center;
 }
 
+.slide {
+    width: auto;
+    display:block;
+    margin:0 auto;
+    padding:0;
+    text-align: center;
+}
+
+.form-control {
+	margin-left:1em;
+}
+
 #edit {
-    display: block;
+    display: inline-block;
     margin:1em auto;
     text-align: center;
 }

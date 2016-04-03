@@ -23,7 +23,11 @@
 				<div class="albumdiv" ng-init="getAlbuns()"> 
 					<select name="singleSelect" id="album_id" ng-model="album_id" ng-change="searchImagesAlbum()">
 				      <option value=""><text th:text="#{selectalbum}"></text></option> <!-- not selected / blank option -->
-				       <option  data-ng-repeat="album in albuns" value="{{album.id}}">{{album.description}}</option>
+				       <option  data-ng-repeat="album in albuns" value="{{album.id}}">
+				       		{{album.description}}
+				       		<text ng-if="album.dateini and album.datefin"> ({{album.dateini  | date:'dd/MM/yyyy'}} - {{album.datefin  | date:'dd/MM/yyyy'}})</text>
+				       			
+				       	</option>
 				    </select>
 				</div>
 			
@@ -153,7 +157,7 @@
 				
 					<div class="albumimages" ng-if="album_id">
 									
-									<div>
+									<div style="height:680px">
 									    <uib-carousel id="myCarousel" active="active" interval="myInterval" no-wrap="noWrapSlides">
 									      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
 									        
@@ -163,7 +167,7 @@
 									        		<a th:title="#{edit}"   href="#" ng-click="openModalImage('lg',slide.idimage, $index)" ><img th:src="@{/images/edit_32x32.png}"/></a>
 													<a th:title="#{delete}" href="#" ng-click="deleteImage(slide.idimage, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
 												 </sec>
-											</div>
+											</div><div class="clearer"></div>
 											
 										    <text class="totalimages">
 												{{slide.id+1}} / {{total}}

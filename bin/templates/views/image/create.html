@@ -18,7 +18,9 @@
 			<div class="albumdiv" ng-init="getAlbuns()"> 
 				<select name="singleSelect" id="album_id" ng-model="album_id" ng-change="update()">
 			      <option value=""><text th:text="#{selectalbum}"></text></option> <!-- not selected / blank option -->
-			       <option  data-ng-repeat="album in albuns" value="{{album.id}}">{{album.description}}</option>
+			       <option  data-ng-repeat="album in albuns" value="{{album.id}}">{{album.description}}
+			       	<text ng-if="album.dateini and album.datefin"> ({{album.dateini  | date:'dd/MM/yyyy'}} - {{album.datefin  | date:'dd/MM/yyyy'}})</text>
+				   </option>
 			    </select>
 			</div>
 			

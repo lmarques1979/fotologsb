@@ -5,6 +5,8 @@ import javax.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Order
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.servlet.ModelAndView
 
 import br.com.marquesapps.model.Album
@@ -61,7 +62,8 @@ class AlbumController {
 	def view(Model model) {
 		def util = new Util()
 		def user = util.getLoggedUser()
-		def album=albumRepository.findByUser(user)
+		def orderby = new Sort(new Order(Sort.Direction.DESC, "dateini"))
+		def album=albumRepository.findByUser(user,orderby)
 		model.addAttribute("album", album);
 		new ModelAndView("views/album/view")
 	}

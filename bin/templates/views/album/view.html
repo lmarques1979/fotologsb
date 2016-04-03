@@ -40,8 +40,8 @@
 					<tr th:each="album : ${album}">
 						<td class="centro"><a th:title="#{edit}" th:href="@{/album/show/{id}(id= ${album.id})}"><img th:src="@{/images/edit.png}"/></a></td>
 						<td class="centro"><text for="description" th:text="${album.description}"></text></td>
-						<td class="centro"><text for="dateini" th:text="${#calendars.format(album.dateini,'dd/MM/yyyy')}"></text></td>
-						<td class="centro"><text for="datefin" th:text="${#calendars.format(album.datefin,'dd/MM/yyyy')}"></text></td>
+						<td class="centro"><text for="dateini" th:text="${album.dateini!=null ? #calendars.format(album.dateini,'dd/MM/yyyy') : ''}"></text></td>
+						<td class="centro"><text for="datefin" th:text="${album.datefin!=null ? #calendars.format(album.datefin,'dd/MM/yyyy') : ''}"></text></td>
 						<td class="centro"><text for="fullpermited" th:text="${album.fullpermited} ? #{yes} : #{no}"></text></td>
 						<td class="centro"><text for="active" th:text="${album.active} ? #{yes} : #{no}"></text></td>
 					</tr>
