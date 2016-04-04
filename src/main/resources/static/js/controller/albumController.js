@@ -1,7 +1,7 @@
 app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $timeout, albumService, imageService, messageService) {
 
-	vm=this;
-	$scope.myInterval=0;
+	var vm=this;
+	var myInterval = $scope.myInterval = 0;
 	$scope.checked=false;
 	$scope.noWrapSlides=false;
 	$scope.active=0;
@@ -11,7 +11,6 @@ app.controller('albumController', function ($scope, $http,  $uibModal, $log,  $t
 	//reset Form
 	$scope.image = {};
 	$scope.animationsEnabled = true;
-	
 	
 	$scope.deleteMessageCarousel = function (messageId, parentindex, index) {
 	  	

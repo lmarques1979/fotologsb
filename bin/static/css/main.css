@@ -12,7 +12,14 @@ html {
 }
 
 ul.slideoption  li{
- 	display: inline;
+ 	display: block;
+	text-align: center;
+	margin: 0 auto;
+}
+
+input.slideseconds{
+	width:5%;
+	margin-left:0.7em;
 }
 
 a img.deletemsg {

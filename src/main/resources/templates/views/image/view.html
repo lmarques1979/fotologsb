@@ -155,6 +155,9 @@
 				
 				<div ng-if="total > 0">
 				
+					<ul class="slideoption">
+						<li><text th:text="#{interval}"></text><input step="1000" name="myInterval" type="number" class="slideseconds" ng-model="myInterval"/></li>
+					</ul>
 					<div class="albumimages" ng-if="album_id">
 									
 									<div>
