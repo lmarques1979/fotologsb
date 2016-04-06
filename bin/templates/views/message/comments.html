@@ -22,19 +22,28 @@
 					</tr>
 					
 					<tr>
+						<th colspan="7">
+							<select name="filter" ng-model="search.active" ng-init="search.active='false'">
+						      <option value=""><text th:text="#{all}"></text></option> <!-- not selected / blank option -->
+						      <option value="true"><text th:text="#{active}"></text></option> <!-- not selected / blank option -->
+						      <option value="false" selected="selected"><text th:text="#{inactive}"></text></option> <!-- not selected / blank option -->
+						    </select>
+						</th>
+					</tr>
+					<tr>
 						<th></th>
-						<th><text for="fromuser" th:text="#{fromuser}"></text></th>
-						<th><text for="fromemail" th:text="#{fromemail}"></text></th>
-						<th><text for="datemessage" th:text="#{datemessage}"></text></th>
-						<th><text for="message" th:text="#{message}"></text></th>
-						<th><text for="active" th:text="#{active}"></text></th>
+						<th ng-click="sort('fromuser')"><text for="fromuser" th:text="#{fromuser}"></text></th>
+						<th ng-click="sort('fromemail')"><text for="fromemail" th:text="#{fromemail}"></text></th>
+						<th ng-click="sort('datemessage')"><text for="datemessage" th:text="#{datemessage}"></text></th>
+						<th ng-click="sort('message')"><text for="message" th:text="#{message}"></text></th>
+						<th ng-click="sort('active')"><text for="active" th:text="#{active}"></text></th>
 						<th></th>
 					</tr>
 					
 				</thead>
 				<tbody>
 				
-					<tr ng-repeat="message in message track by message.id">
+					<tr ng-repeat="message in message|orderBy:sortKey:reverse|filter:{active:search.active||''}">
 					    <input type="hidden" ng-model="message.id"/>
 					    <input type="hidden" ng-model="message.image"/>
 					    <td><img th:width="60px" th:height="60px" ng-src="{{urlimage}}{{message.image.name}}"/></td>
@@ -44,15 +53,15 @@
 						<td>
 							<textarea ng-readonly="true" ng-model="message.message" rows="4" cols="40"></textarea>
 						</td>
-						<td class="centro"><input ng-model="message.active" type="checkbox"/></td>
+						<td class="centro"><input ng-model="message.active" type="checkbox" ng-change="saveComments()"/></td>
 						<td>
 							<a href="#" th:title="#{delete}" ng-click="deleteMessage(message.id, $index)" ng-confirm-click="Confirm Delete?"><img th:src="@{/images/delete.png}"/></a>
 						</td>
 					</tr>
 					
-					<tr>
+					<!--<tr>
 						<td colspan="7"><a class="criar" href="#" ng-click="saveComments()"><text for="save" th:text="#{save}"></text></a></td>
-					</tr>
+					</tr>  -->
 											
 				</tbody>
 				

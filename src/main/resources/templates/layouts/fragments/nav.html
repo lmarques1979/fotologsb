@@ -28,7 +28,7 @@
 				 			</li>
 				 			
 				 			<li th:class="${#httpServletRequest.getServletPath().equals('/image/comments') ? 'active' : ''}">
-					 				<a th:href="@{/image/comments}"><text for="inactive" th:text="#{inactive}"></text></a>
+					 				<a th:href="@{/image/comments}"><text for="comments" th:text="#{comments}"></text></a>
 					 		</li>
 				 			
 				 			<li th:class="${#httpServletRequest.getServletPath().equals('/album/view') ||
